@@ -1,0 +1,27 @@
+services:
+  joplin:
+    image: joplin/server:latest
+    container_name: joplin-server
+    restart: unless-stopped
+    ports:
+      - "22300:22300"
+    environment:
+      - APP_PORT=22300
+      - APP_BASE_URL=http://${IP}:22300
+      - TZ=Europe/Madrid
+      - MAX_TIME_DRIFT=0
+    volumes:
+      - joplin_data:/home/joplin/packages/server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`joplin.omp.home`)"
+    networks:
+      - traefik-net
+
+volumes:
+  joplin_data:
+    external: true
+
+networks:
+  traefik-net:
+    external: true

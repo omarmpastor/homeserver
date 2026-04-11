@@ -1,0 +1,23 @@
+services:
+  traefik:
+    image: traefik:v3.6
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - traefik-net
+
+networks:
+  traefik-net:
+    external: true
+
+# Añadimos a los contenedores
+# labels:
+#   - "traefik.enable=true"
+#   - "traefik.http.routers.whoami.rule=Host(`servicio.omp.home`)"

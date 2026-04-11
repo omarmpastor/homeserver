@@ -1,0 +1,36 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+      #- JELLYFIN_PublishedServerUrl=192.168.1.44 #optional
+    volumes:
+      - jellyfin_data:/config:Z
+      - jellyfin_cache:/config/cache:Z
+      - ${STORAGE}/media/movies:/data/movies:Z
+      - ${STORAGE}/media/tv:/data/tvshows:Z
+      - ${STORAGE}/media/videos:/data/videos:Z
+      - ${STORAGE}/media/youtube:/data/youtube:Z
+    ports:
+      - 8096:8096
+      #- 8920:8920 #optional
+      #- 7359:7359/udp #optional
+      #- 1900:1900/udp #optional
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`jellyfin.omp.home`)"
+    networks:
+      - traefik-net
+
+volumes:
+  jellyfin_data:
+    external: true
+  jellyfin_cache:
+
+networks:
+  traefik-net:
+    external: true

@@ -1,0 +1,23 @@
+services:
+  filebrowser:
+    image: gtstef/filebrowser:stable
+    user: filebrowser
+    volumes:
+      - ${STORAGE}/filebrowser:/srv
+      - filebrowser_config:/home/filebrowser/data
+    ports:
+      - 8080:80
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`filebrowser.omp.home`)"
+    networks:
+      - traefik-net
+
+volumes:
+  filebrowser_config:
+    external: true
+
+networks:
+  traefik-net:
+    external: true

@@ -1,0 +1,25 @@
+services:
+  flame:
+    image: pawelmalak/flame
+    container_name: flame
+    volumes:
+      - flame_data:/app/data
+      #- /var/run/docker.sock:/var/run/docker.sock # optional but required for Docker integration
+    ports:
+      - 5005:5005
+    environment:
+      - PASSWORD=Homeserver.26
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`dashboard.omp.home`)"
+    networks:
+      - traefik-net
+
+volumes:
+  flame_data:
+    external: true
+
+networks:
+  traefik-net:
+    external: true

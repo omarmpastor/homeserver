@@ -1,0 +1,29 @@
+services:
+  nextcloud:
+    image: docker.io/library/nextcloud:stable-apache
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - nextcloud_config:/var/www/html/config:Z
+      - nextcloud_custom_apps:/var/www/html/custom_apps:Z
+      - ${STORAGE}/nextcloud_data:/var/www/html/data:Z
+    environment:
+      - SQLITE_DATABASE=dbnextcloud
+      - NEXTCLOUD_ADMIN_USER=${APP_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${APP_PASSWORD}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${IP} nextcloud.${DOMAIN}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`nextcloud.omp.home`)"
+    networks:
+      - traefik-net
+
+volumes:
+  nextcloud_config:
+    external: true
+  nextcloud_custom_apps:
+
+networks:
+  traefik-net:
+    external: true

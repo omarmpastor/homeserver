@@ -1,0 +1,23 @@
+services:
+  gitea:
+    image: docker.gitea.com/gitea:1.25.5
+    restart: unless-stopped
+    volumes:
+      - gitea_data:/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "2222:2222"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`gitea.omp.home`)"
+    networks:
+      - traefik-net
+
+volumes:
+  gitea_data:
+    external: true
+
+networks:
+  traefik-net:
+    external: true

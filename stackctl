@@ -10,8 +10,8 @@ source "$SCRIPT_DIR/lib/volumes.sh"
 source "$SCRIPT_DIR/lib/checks.sh"
 
 # Order matters
-STACKS=("traefik" "gitea" "jellyfin" "joplin" "filebrowser")
-VOLUMES=("filebrowser_data" "gitea_data" "jellyfin_data" "joplin_data" "traefik_data")
+STACKS=("filebrowser" "flame" "gitea" "jellyfin" "joplin" "kopia" "media-stack" "metube" "traefik" )
+VOLUMES=("filebrowser_config" "flame_data" "gitea_data" "jellyfin_data" "joplin_data" "kopia_config" "qbittorrent_data" "prowlarr_data" "sonarr_data" "radarr_data" "bazarr_data" "jackett_data")
 
 COMMAND="${1:-}"
 

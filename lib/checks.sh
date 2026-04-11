@@ -2,12 +2,12 @@ check_structure() {
   echo "[CHECK] Estructura de stacks..."
 
   for s in "${STACKS[@]}"; do
-    if [[ ! -d "$SCRIPT_DIR/$s" ]]; then
+    if [[ ! -d "$SCRIPT_DIR/stacks/$s" ]]; then
       echo "[ERROR] Falta directorio: $s"
       exit 1
     fi
 
-    if [[ ! -f "$SCRIPT_DIR/$s/compose.yml" ]]; then
+    if [[ ! -f "$SCRIPT_DIR/stacks/$s/compose.yml" ]]; then
       echo "[ERROR] Falta compose.yml en $s"
       exit 1
     fi

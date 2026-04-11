@@ -1,0 +1,74 @@
+services:
+  kopia:
+    image: kopia/kopia:latest
+    hostname: kopia
+    container_name: kopia
+    restart: unless-stopped
+    ports:
+      - 51515:51515
+    # Setup the server that provides the web gui
+    command:
+      - server
+      - start
+      - --disable-csrf-token-checks
+      - --insecure
+      - --address=0.0.0.0:51515
+      - --server-username=${APP_USER}
+      - --server-password=${APP_PASSWORD}
+    environment:
+      # Set repository password
+      USER: ${APP_USER}
+      KOPIA_PASSWORD: ${APP_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`kopia.omp.home`)"
+    networks:
+      - traefik-net
+    volumes:
+      - kopia_config:/app/config
+      - kopia_cache:/app/cache
+      - kopia_logs:/app/logs
+      - ${STORAGE}/backups:/repository
+      # Volumes for backup
+      - qbittorrent_data:/data/qBittorrent
+      - prowlarr_data:/data/prowlarr
+      - sonarr_data:/data/sonarr
+      - radarr_data:/data/radarr
+      - bazarr_data:/data/bazarr
+      - jackett_data:/data/jackett
+      - jellyfin_data:/data/jellyfin
+      - gitea_data:/data/gitea
+      - filebrowser_config:/data/filebrowser
+      - adguard_conf:/data/adguard/conf
+      - adguard_work:/data/adguard/work
+
+volumes:
+  kopia_config:
+    external: true
+  kopia_cache:
+  kopia_logs:
+  qbittorrent_data:
+  prowlarr_data:
+    external: true
+  sonarr_data:
+    external: true
+  radarr_data:
+    external: true
+  bazarr_data:
+    external: true
+  jackett_data:
+    external: true
+  jellyfin_data:
+    external: true
+  gitea_data:
+    external: true
+  adguard_conf:
+    external: true
+  adguard_work:
+    external: true
+  filebrowser_config:
+    external: true
+
+networks:
+  traefik-net:
+    external: true
