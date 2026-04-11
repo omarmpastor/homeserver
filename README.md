@@ -145,3 +145,22 @@ stackctl purge-volumes
 ```bash
 stackctl status
 ```
+
+## Modificar DNS
+
+Ahora tendremos que añadir las entradas tipo CNAME a nuestro DNS apuntando a nuestro servidor
+```
+joplin.omp.home
+filebrowser.omp.home
+metube.omp.home
+sonarr.omp.home
+radarr.omp.home
+prowlarr.omp.home
+qbittorrent.omp.home
+jackett.omp.home
+bazarr.omp.home
+kopia.omp.home
+jellyfin.omp.home
+gitea.omp.home
+dashboard.omp.home
+```
