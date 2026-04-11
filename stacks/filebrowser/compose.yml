@@ -6,7 +6,7 @@ services:
       - ${STORAGE}/filebrowser:/srv
       - filebrowser_config:/home/filebrowser/data
     ports:
-      - 8080:80
+      - 8082:80
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
