@@ -39,8 +39,6 @@ services:
       - jellyfin_data:/data/jellyfin
       - gitea_data:/data/gitea
       - filebrowser_config:/data/filebrowser
-      - adguard_conf:/data/adguard/conf
-      - adguard_work:/data/adguard/work
 
 volumes:
   kopia_config:
@@ -61,10 +59,6 @@ volumes:
   jellyfin_data:
     external: true
   gitea_data:
-    external: true
-  adguard_conf:
-    external: true
-  adguard_work:
     external: true
   filebrowser_config:
     external: true
