@@ -53,5 +53,5 @@ recovery_latest_snapshot() {
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec -e KOPIA_PASSWORD="$APP_PASSWORD" kopia kopia repository connect filesystem --path=/repository
   
   echo "[RECOVERY] Latest snapshot"
-  #docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia restore latest /restore-path
+  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia snapshot restore root@kopia:/data /data
 }
