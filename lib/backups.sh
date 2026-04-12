@@ -17,7 +17,7 @@ create_volumes() {
 }
 
 create_kopia_service() {
-  echo "[UP] $s"
+  echo "[UP] kopia"
   docker compose -p "$s" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" up -d
 }
 
