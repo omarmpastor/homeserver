@@ -8,11 +8,13 @@ services:
     ports:
       - 5005:5005
     environment:
-      - PASSWORD=Homeserver.26
+      - PASSWORD=${APP_PASSWORD}
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`dashboard.omp.home`)"
+      - "traefik.http.routers.flame.rule=Host(`dashboard.omp.home`)"
+      - "traefik.http.routers.flame.entrypoints=web"
+      - "traefik.http.services.flame.loadbalancer.server.port=5005"
     networks:
       - traefik-net
 

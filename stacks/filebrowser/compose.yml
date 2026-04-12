@@ -10,7 +10,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`filebrowser.omp.home`)"
+      - "traefik.http.routers.filebrowser.rule=Host(`filebrowser.omp.home`)"
+      - "traefik.http.routers.filebrowser.entrypoints=web"
+      - "traefik.http.services.filebrowser.loadbalancer.server.port=8082"
     networks:
       - traefik-net
 

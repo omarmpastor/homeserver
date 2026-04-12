@@ -12,12 +12,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - traefik-net
+    restart: unless-stopped
 
 networks:
   traefik-net:
     external: true
 
 # Añadimos a los contenedores
-# labels:
-#   - "traefik.enable=true"
-#   - "traefik.http.routers.whoami.rule=Host(`servicio.omp.home`)"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.[CONTENEDOR].rule=Host(`[CONTENEDOR].omp.home`)"
+    #   - "traefik.http.routers.[CONTENEDOR].entrypoints=web"
+    #   - "traefik.http.services.[CONTENEDOR].loadbalancer.server.port=[PUERTO]"

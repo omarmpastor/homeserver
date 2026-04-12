@@ -7,16 +7,18 @@ services:
       - "22300:22300"
     environment:
       - APP_PORT=22300
-      - APP_BASE_URL=http://${IP}:22300
+      - APP_BASE_URL=http://joplin.omp.home:22300
       - TZ=Europe/Madrid
       - MAX_TIME_DRIFT=0
     volumes:
       - joplin_data:/home/joplin/packages/server
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`joplin.omp.home`)"
     networks:
       - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.joplin.rule=Host(`joplin.omp.home`)"
+      - "traefik.http.routers.joplin.entrypoints=web"
+      - "traefik.http.services.joplin.loadbalancer.server.port=22300"
 
 volumes:
   joplin_data:

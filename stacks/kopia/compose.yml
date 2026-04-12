@@ -19,11 +19,13 @@ services:
       # Set repository password
       USER: ${APP_USER}
       KOPIA_PASSWORD: ${APP_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`kopia.omp.home`)"
     networks:
       - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kopia.rule=Host(`kopia.omp.home`)"
+      - "traefik.http.routers.kopia.entrypoints=web"
+      - "traefik.http.services.kopia.loadbalancer.server.port=51515"
     volumes:
       - kopia_config:/app/config
       - kopia_cache:/app/cache

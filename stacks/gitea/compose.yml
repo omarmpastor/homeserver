@@ -8,12 +8,13 @@ services:
     ports:
       - "3000:3000"
       - "2222:2222"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`gitea.omp.home`)"
     networks:
       - traefik-net
-
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitea.rule=Host(`gitea.omp.home`)"
+      - "traefik.http.routers.gitea.entrypoints=web"
+      - "traefik.http.services.gitea.loadbalancer.server.port=3000"
 volumes:
   gitea_data:
     external: true
