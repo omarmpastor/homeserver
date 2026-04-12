@@ -2,6 +2,7 @@ services:
   kopia:
     image: kopia/kopia:latest
     hostname: kopia
+    user: "1000:1000"
     container_name: kopia
     restart: unless-stopped
     ports:

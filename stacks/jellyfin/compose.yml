@@ -8,8 +8,8 @@ services:
       - TZ=Europe/Madrid
       #- JELLYFIN_PublishedServerUrl=jellyfin.omp.home
     volumes:
-      - jellyfin_data:/config:Z
-      - jellyfin_cache:/config/cache:Z
+      - jellyfin_data:/config
+      - jellyfin_cache:/config/cache
       - ${STORAGE}/media/movies:/data/movies:Z
       - ${STORAGE}/media/tv:/data/tvshows:Z
       - ${STORAGE}/media/videos:/data/videos:Z
