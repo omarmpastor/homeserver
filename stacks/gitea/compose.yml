@@ -1,6 +1,7 @@
 services:
   gitea:
     image: docker.gitea.com/gitea:1.25.5
+    container_name: gitea
     restart: unless-stopped
     volumes:
       - gitea_data:/data

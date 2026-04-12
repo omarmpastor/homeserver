@@ -1,6 +1,7 @@
 services:
   filebrowser:
     image: gtstef/filebrowser:stable
+    container_name: filebrowser
     user: filebrowser
     volumes:
       - ${STORAGE}/filebrowser:/srv
