@@ -132,6 +132,8 @@ cd homeserver
 /opt/docker/homeserver/stackctl dry-run
 ```
 
+[Ayuda completa de los scripts de isntalación](https://github.com/omarmpastor/homeserver/blob/main/doc/HELP_SCRIPTS.md)
+
 ## Modificar DNS
 
 Ahora tendremos que añadir las entradas tipo CNAME a nuestro DNS apuntando a nuestro servidor
@@ -151,3 +153,7 @@ gitea.omp.home
 dashboard.omp.home
 cockpit.omp.home
 ```
+
+## Configuramos los servicios
+
+[Configurar servicios](https://github.com/omarmpastor/homeserver/blob/main/doc/CONFIGURE_SERVICES.md)
