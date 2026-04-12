@@ -31,7 +31,8 @@ configure_kopia() {
 
 recovery_latest_snapshot() {
   echo "[CREATE??] Local repository"
-  #docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia repository create filesystem --path=/repository
+  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec -e KOPIA_PASSWORD="$APP_PASSWORD" kopia kopia repository connect filesystem --path=/repository --override-username="$APP_USER"
+  
   echo "[RECOVERY] Latest snapshot"
   #docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia restore latest /restore-path
 }

@@ -36,6 +36,8 @@ case "$COMMAND" in
     ;;
 
   recovery)
+    create_volumes
+    create_kopia_service
     recovery_latest_snapshot
     ;;
 

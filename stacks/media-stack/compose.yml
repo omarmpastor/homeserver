@@ -7,7 +7,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - jackett_data:/config:Z
+      - jackett_data:/config
     ports:
       - 9117:9117
     restart: unless-stopped
@@ -70,7 +70,7 @@ services:
     ports:
       - 8989:8989
     volumes:
-      - sonarr_data:/config:Z
+      - sonarr_data:/config
       - ${STORAGE}/torrents:/downloads:Z
       - ${STORAGE}/media/tv:/storage/TV:Z
     environment:
@@ -95,7 +95,7 @@ services:
     ports:
       - 7878:7878
     volumes:
-      - radarr_data:/config:Z
+      - radarr_data:/config
       - ${STORAGE}/torrents:/downloads:Z
       - ${STORAGE}/media/movies:/storage/Movies:Z
     environment:
@@ -122,7 +122,7 @@ services:
       - PGID=1000
       - TZ=Europe/Madrid
     volumes:
-      - bazarr_data:/config:Z
+      - bazarr_data:/config
       - ${STORAGE}/media/movies:/movies:Z
       - ${STORAGE}/media/tv:/tv:Z
     ports:
