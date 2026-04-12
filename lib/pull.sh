@@ -7,4 +7,3 @@ pull_stacks() {
 
 echo "[PULL] kopia"
 docker compose -p "$s" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" pull
-W
