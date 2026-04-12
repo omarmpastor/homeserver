@@ -8,13 +8,13 @@ services:
     ports:
       - 8082:80
     restart: unless-stopped
+    networks:
+      - traefik-net
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.filebrowser.rule=Host(`filebrowser.omp.home`)"
       - "traefik.http.routers.filebrowser.entrypoints=web"
       - "traefik.http.services.filebrowser.loadbalancer.server.port=8082"
-    networks:
-      - traefik-net
 
 volumes:
   filebrowser_config:
