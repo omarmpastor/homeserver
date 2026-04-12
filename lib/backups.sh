@@ -1,4 +1,4 @@
-create_volumes() {
+create_backup_volumes() {
   for v in "${VOLUMES[@]}"; do
     if docker volume inspect "$v" >/dev/null 2>&1; then
       echo "[EXISTS] volumen existe: $v"
@@ -14,6 +14,24 @@ create_volumes() {
       echo "[CREATE] kopia_config"
       docker volume create "kopia_config" >/dev/null
   fi
+}
+
+delete_backup_volumes() {
+  echo "⚠️ ATENCIÓN: Esto eliminará TODOS los volúmenes definidos"
+  read -rp "Escribe YES para continuar: " confirm
+
+  if [[ "$confirm" != "YES" ]]; then
+    echo "[ABORTED]"
+    exit 0
+  fi
+
+  for v in "${VOLUMES[@]}"; do
+    docker volume rm "$v" 2>/dev/null || true
+    echo "[DELETED] $v"
+  done
+
+  docker volume rm "kopia_config" 2>/dev/null || true
+  echo "[DELETED] kopia_config"
 }
 
 create_kopia_service() {
