@@ -149,4 +149,5 @@ kopia.omp.home
 jellyfin.omp.home
 gitea.omp.home
 dashboard.omp.home
+cockpit.omp.home
 ```

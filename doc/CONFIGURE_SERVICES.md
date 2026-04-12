@@ -6,74 +6,109 @@ Ahora vamos a ir configurando las apps
 
 ## Dashboard
 
-Arrancamos el proyecto: Desde arcane > Proyectos > Elegimos flame > Subir
+Vamos a http://dashboard.omp.home
 
-Vamos a http://192.168.1.99
+Creamos en nuestro servidor el archivo ~/inserts.js
+```javascript
+const sqlite3 = require('sqlite3').verbose();
+
+const db = new sqlite3.Database('/app/data/db.sqlite');
+
+const apps = [
+  {
+    name: 'Cockpit',
+    url: 'https://cockpit.omp.home:9090',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/cockpit-light.svg',
+  },
+  {
+    name: 'Gitea',
+    url: 'http://gitea.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/gitea.svg',
+  },
+  {
+    name: 'qBittorrent',
+    url: 'http://qbittorrent.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/qbittorrent.svg',
+  },
+  {
+    name: 'Jellyfin',
+    url: 'http://jellyfin.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jellyfin.svg',
+  },
+  {
+    name: 'Prowlarr',
+    url: 'http://prowlarr.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/prowlarr.svg',
+  },
+  {
+    name: 'Radarr',
+    url: 'http://radarr.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/radarr.svg',
+  },
+  {
+    name: 'Sonarr',
+    url: 'http://sonarr.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/sonarr.svg',
+  },
+  {
+    name: 'Bazarr',
+    url: 'http://bazarr.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/bazarr.png',
+  },
+  {
+    name: 'Joplin',
+    url: 'http://joplin.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/joplin.svg',
+  },
+  {
+    name: 'Filebrowser',
+    url: 'http://filebrowser.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/filebrowser-quantum.svg',
+  },
+  {
+    name: 'Kopia',
+    url: 'http://kopia.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/kopia.svg',
+  },
+  {
+    name: 'Metube',
+    url: 'http://metube.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/metube.svg',
+  }
+];
+
+for (const app of apps) {
+  db.run(
+    `
+    INSERT INTO apps (name, url, icon, isPinned, isPublic, createdAt, updatedAt)
+    VALUES (?, ?, ?, 1, 1, datetime('now'), datetime('now'))
+    `,
+    [app.name, app.url, app.icon]
+  );
+}
+
+db.close();
+```
+
+Ejecutamos
+```bash
+cat insert.js | docker exec -i flame node -
+```
 
 En el boton de configuracion de abajo a la izquierda, vamos a App y ponemos la contraseña que hemos puesto en la configuracion del contenedor
 
 Configuramos la vista para que solo aparezcan las aplicaciones
 
-En el apartados css establecemos (mirar si es el nombre de la clase correcto en las dev tools de chrome):
+En el apartados css establecemos (mirar si es el nombre de la clase de las apps correcto en las dev tools de chrome):
 ```css
 .AppCard_AppCard__NPTM5 div h5 {
   font-size: 20px !important;
 }
 ```
 
-Ahora pinchamos en APPLICATIONS y nos aparece el boton ADD
-Añadimos estas aplicaciones:
-```
-Nombre: Cockpit  
-URL: http://192.168.1.99:9090  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/cockpit-light.svg  
-
-Nombre: Arcane  
-URL: http://192.168.1.99:3552  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/arcane.svg  
-
-Nombre: Nextcloud  
-URL: http://192.168.1.99:8080  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/nextcloud.svg  
-
-Nombre: Gitea  
-URL: http://192.168.1.99:3000  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/gitea.svg  
-
-Nombre: qBittorrent  
-URL: http://192.168.1.99:8090  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/qbittorrent.svg  
-
-Nombre: Jellyfin  
-URL: http://192.168.1.99:8096  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jellyfin.svg  
-
-Nombre: Prowlarr  
-URL: http://192.168.1.99:9696  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/prowlarr.svg  
-
-Nombre: Radarr  
-URL: http://192.168.1.99:7878  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/radarr.svg  
-
-Nombre: Sonarr  
-URL: http://192.168.1.99:8989  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/sonarr.svg  
-
-Nombre: Bazarr  
-URL: http://192.168.1.99:6767  
-Icono: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/bazarr-dark.svg  
-```
-
-## Media Downloads
-
-Arrancamos el proyecto: Desde arcane > Proyectos > Elegimos media-downloads > Subir (este tardara porque tiene varias imagenes que desargar)
-
-### qBittorrent
-
 Lo primero necesitamos conocer el password que nos ha puesto por defecto. Esto está en los logs del contenedor (Ejecutamos: `docker logs qbittorrent`)
 
-Vamos a http://192.168.1.99:8090
+Vamos a http://qbittorrent.omp.home
 
 Entramos en la interfaz con `admin` y el password temporal que nos ha creado:
 - Vamos a Tools > Options > WebUI y cambiamos el password. Si no queremos que nos pida usuario y contraseña, marcamos: `Bypass authentication for clients in whitelisted IP subnets` y le añadimos nuestra red `192.168.1.0/24`
@@ -81,7 +116,7 @@ Entramos en la interfaz con `admin` y el password temporal que nos ha creado:
 
 ### Sonarr/Radarr
 
-Nos conectamos a http://192.168.1.99:7878 para radarr y http://192.168.1.99:8989 para sonarr
+Nos conectamos a http://radarr.omp.home para radarr y http://sonarr.omp.home para sonarr
 
 La primera vez que nos conectemos nos pedira que establezcamos un login:
 
@@ -95,9 +130,6 @@ Vamos a Settings -> Media Management -> Pinchamos en el icono de arriba "Show Ad
 - Al final en el botón Add Root Folder, añadimos -> "/storage/Movies/" para radarr y "/storage/TV/"
 - Guardamos cambios
 
-Vamos a Settings -> General -> Backups -> Folder -> Establecemos /data/backup/
-- Guardamos cambios
-
 Vamos a Settings -> Download Clients -> + -> qBittorrent
 - Host: qbittorrent
 - Port: 8090
@@ -109,7 +141,7 @@ Vamos a Settings -> Profiles -> Entramos a cada uno de ellos -> Language -> Span
 
 ### Prowlarr
 
-Nos conectamos a http://192.168.1.99:7878
+Nos conectamos a http://prowlarr.omp.home
 
 La primera vez que nos conectemos nos pedira que establezcamos un login:
 
@@ -138,17 +170,17 @@ Ahora vamos a Indexers (No a Settings > Indexers) -> Add Indexer y añadimos los
 
 ### Bazarr
 
-Nos conectamos a http://192.168.1.99:6767
+Nos conectamos a http://bazarr.omp.home
 
 ### Bazarr
 
-Al arrancar nos aparece en esta página: http://192.168.1.99:6767/settings/general
+Al arrancar nos aparece en esta página: http://bazarr.omp.home/settings/general
 - Security > Authentication > Form
 - Establecemos > Username: wyse y Password: Homeserver.26
 - Guardamos
 
 
-Vamos a http://192.168.1.99:6767/settings/languages
+Vamos a http://bazarr.omp.home/settings/languages
 - Languages Filter > Escribimos > Spanish English (Nos autocompleta)
 - Languages Profile > añadimos 3 (por separado, habra que pinchar en Add new profile tres veces):
     - Name: Spanish, Tag es
@@ -164,7 +196,7 @@ Vamos a http://192.168.1.99:6767/settings/languages
 
 Guardamos (arriba a la izquierda hay un icono de guardar)
 
-Vamos a http://192.168.1.99:6767/settings/sonarr
+Vamos a http://bazarr.omp.home/settings/sonarr
 - Lo activamos
 - Address: sonarr
 - API Key: Ponemos lo que hay en En Sonarr > Settings > General > API Key
@@ -172,7 +204,7 @@ Vamos a http://192.168.1.99:6767/settings/sonarr
     - Sonar: /storage/TV/ - Bazarr: /tv/
 - Guardamos
 
-Vamos a http://192.168.1.99:6767/settings/radarr
+Vamos a http://bazarr.omp.home/settings/radarr
 - Lo activamos
 - Address: radarr
 - API Key: Ponemos lo que hay en En Radarr > Settings > General > API Key
@@ -181,22 +213,22 @@ Vamos a http://192.168.1.99:6767/settings/radarr
 - Guardamos
 
 
-Vamos a http://192.168.1.99:6767/settings/providers
+Vamos a http://bazarr.omp.home/settings/providers
 - Añadimos > Subtitulamos.tv
 - Añadimos > Supersubtitles
 
-Vamos a http://192.168.1.99:6767/settings/series
+Vamos a http://bazarr.omp.home/settings/series
 - Marcamos el icono de la izquierda "Mass edit" para establecer en todos Spanish-English
 
-Vamos a http://192.168.1.99:6767/settings/movies
+Vamos a http://bazarr.omp.home/settings/movies
 - Marcamos el icono de la izquierda "Mass edit" para establecer en todos Spanish-English
 
 
-## Media Player
+## Jellyfin
 
 Arrancamos el proyecto: Desde arcane > Proyectos > Elegimos jellyfin > Subir
 
-Vamos a http://192.168.1.99:8096
+Vamos a http://jellyfin.omp.home
 
 Usamos el asistente para configurar el servidor estableciendo en Español y poniendo usuario y contraseña:
 Usuario: wyse
@@ -216,7 +248,7 @@ Vamos a Panel de Control > Usuarios y añadimos omar
 
 Arrancamos el proyecto: Desde arcane > Proyectos > Elegimos gitea > Subir
 
-Vamos a http://192.168.1.99:3000
+Vamos a http://gitea.omp.home
 
 Ahora nos sale la configuracion por defecto, vamos bajo del todo y pinchamos en "Instalar Gitea"
 
@@ -225,16 +257,5 @@ Usuario: wyse
 Email: wyse@omp.lab
 Password: Homeserver.26
 
-Ahora vamos a http://192.168.1.99:3000/-/admin/users y creamos un usuario
+Ahora vamos a http://gitea.omp.home/-/admin/users y creamos un usuario
 
-## Nextcloud
-
-Arrancamos el proyecto: Desde arcane > Proyectos > Elegimos nextcloud > Subir
-
-Ahora tarda 1 min aproximadamente en levantar
-
-Vamos a http://192.168.1.99:8080 y hacemos login con el usuario que hemos puesto al crear el contenedor
-
-Vamos a http://192.168.1.99:8080/settings/users y creamos el usuario omar
-
-**REVISAR!!! Configurar para optimizar y que consuma menos recursos**
