@@ -92,7 +92,7 @@ db.close();
 
 Ejecutamos
 ```bash
-cat insert.js | docker exec -i flame node -
+cat inserts.js | docker exec -i flame node -
 ```
 
 En el boton de configuracion de abajo a la izquierda, vamos a App y ponemos la contraseña que hemos puesto en la configuracion del contenedor

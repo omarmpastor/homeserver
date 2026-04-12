@@ -49,6 +49,7 @@ volumes:
   kopia_cache:
   kopia_logs:
   qbittorrent_data:
+    external: true
   prowlarr_data:
     external: true
   sonarr_data:

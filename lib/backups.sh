@@ -41,7 +41,8 @@ create_kopia_service() {
 
 configure_kopia() {
   echo "[CREATE] Local repository"
-  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia repository create filesystem --path=/repository
+  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec -e KOPIA_PASSWORD="$APP_PASSWORD" kopia kopia repository create filesystem --path=/repository
+
   echo "[CONFIGURE] Retention Policy"
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia policy set --global --keep-latest=1 --keep-hourly=8 --keep-daily=2 --keep-weekly=1 --keep-monthly=1 --keep-annual=0
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia snapshot create /data --tags=type:first
@@ -49,7 +50,7 @@ configure_kopia() {
 
 recovery_latest_snapshot() {
   echo "[CREATE??] Local repository"
-  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec -e KOPIA_PASSWORD="$APP_PASSWORD" kopia kopia repository connect filesystem --path=/repository --override-username="$APP_USER"
+  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec -e KOPIA_PASSWORD="$APP_PASSWORD" kopia kopia repository connect filesystem --path=/repository
   
   echo "[RECOVERY] Latest snapshot"
   #docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia restore latest /restore-path
