@@ -41,6 +41,7 @@ services:
       - jellyfin_data:/data/jellyfin
       - gitea_data:/data/gitea
       - filebrowser_config:/data/filebrowser
+      - flame_data:/data/flame
 
 volumes:
   kopia_config:
@@ -63,6 +64,8 @@ volumes:
   gitea_data:
     external: true
   filebrowser_config:
+    external: true
+  flame_data:
     external: true
 
 networks:
