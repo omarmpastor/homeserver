@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Load modules
 source "$SCRIPT_DIR/lib/env.sh"
 source "$SCRIPT_DIR/lib/stacks.sh"
+source "$SCRIPT_DIR/lib/pull.sh"
 source "$SCRIPT_DIR/lib/volumes.sh"
 source "$SCRIPT_DIR/lib/checks.sh"
 
@@ -20,10 +21,19 @@ COMMAND="${1:-}"
 usage() {
   cat <<EOF
 Uso:
+  stackctl <comando>
+
+Comandos:
+  up               Levanta toda la infraestructura
+  pull             Descarga/actualiza las imágenes
+  down             Detiene todos los stacks
+  dry-run          Valida la infraestructura sin aplicar cambios
+  purge-volumes    Elimina los volúmenes gestionados
+  status           Muestra el estado de los contenedores
+
+Ejemplos:
   stackctl up
   stackctl down
-  stackctl dry-run
-  stackctl purge-volumes
   stackctl status
 EOF
 }
@@ -34,6 +44,10 @@ case "$COMMAND" in
     check_structure
     create_volumes
     deploy_stacks
+    ;;
+
+  pull)
+    pull_stacks
     ;;
 
   down)

@@ -19,3 +19,9 @@ fi
 echo "[UP] $s"
 docker compose -p "$s" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" up -d
 
+
+# Configurar
+echo "[CREATE] Local repository"
+docker compose -p "$s" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia repository create filesystem --path=/repository
+echo "[CONFIGURE] Retention Policy"
+docker compose -p "$s" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia policy set --global --keep-latest=1 --keep-hourly=8 --keep-daily=2 --keep-weekly=1 --keep-monthly=1 --keep-annual=0

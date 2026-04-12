@@ -119,31 +119,17 @@ git clone https://github.com/omarmpastor/homeserver.git
 cd homeserver
 ```
 
-### Modo de uso de los scripts para levantar lso servicios
+### Modo de uso de los scripts para levantar los servicios
 
-🧪 Validación segura
 ```bash
-stackctl dry-run
-```
+# Hacemos comprobaciones previas (opcional)
+/opt/docker/homeserver/stackctl dry-run
 
-🚀 Deploy completo
-```bash
-stackctl up
-```
+# Hacemos el pull de las imagenes primero (opcional)
+/opt/docker/homeserver/stackctl pull
 
-⛔ Stop completo
-```bash
-stackctl down
-```
-
-💣 Borrado de datos
-```bash
-stackctl purge-volumes
-```
-
-📊 Estado
-```bash
-stackctl status
+# Levantamos todos los stacks
+/opt/docker/homeserver/stackctl dry-run
 ```
 
 ## Modificar DNS
