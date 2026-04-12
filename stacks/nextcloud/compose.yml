@@ -19,7 +19,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.omp.home`)"
       - "traefik.http.routers.nextcloud.entrypoints=web"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=8083"
+      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
 
 volumes:
   nextcloud_config:
