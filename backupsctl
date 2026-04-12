@@ -4,6 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Load modules
+source "$SCRIPT_DIR/lib/env.sh"
 source "$SCRIPT_DIR/lib/backups.sh"
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/volumes.sh"
@@ -32,12 +33,14 @@ EOF
 
 case "$COMMAND" in
   up)
+    load_env
     create_volumes
     create_kopia_service
     configure_kopia
     ;;
 
   recovery)
+    load_env
     create_volumes
     create_kopia_service
     recovery_latest_snapshot
