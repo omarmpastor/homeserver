@@ -45,13 +45,18 @@ configure_kopia() {
 
   echo "[CONFIGURE] Retention Policy"
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia policy set --global --keep-latest=1 --keep-hourly=8 --keep-daily=2 --keep-weekly=1 --keep-monthly=1 --keep-annual=0
+
+  echo "[CREATE] First snapshot"
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia snapshot create /data --tags=type:first
 }
 
 recovery_latest_snapshot() {
-  echo "[CREATE??] Local repository"
+  echo "[CONNECT] Local repository"
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec -e KOPIA_PASSWORD="$APP_PASSWORD" kopia kopia repository connect filesystem --path=/repository
   
   echo "[RECOVERY] Latest snapshot"
   docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia snapshot restore root@kopia:/data /data
+
+  echo "[CONFIGURE] Retention Policy"
+  docker compose -p "kopia" -f "$SCRIPT_DIR/stacks/kopia/compose.yml" exec kopia kopia policy set --global --keep-latest=1 --keep-hourly=8 --keep-daily=2 --keep-weekly=1 --keep-monthly=1 --keep-annual=0
 }

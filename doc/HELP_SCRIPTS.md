@@ -2,7 +2,7 @@
 
 ## Puesta en marcha
 
-🧪 Validación segura
+🧪 Primero ejecutamos una validación
 ```bash
 stackctl dry-run
 ```
@@ -16,6 +16,8 @@ stackctl pull
 ```bash
 stackctl up
 ```
+
+### Otros comandos
 
 ⛔ Stop completo
 ```bash
@@ -34,12 +36,27 @@ stackctl status
 
 ## Backups
 
+Una vez levantemos los contenedores y los configuremos, levantamos el servicio de backup y hace el primer backup automáticamente
+
 💾 Activar backups
 ```bash
 backupsctl up
 ```
 
-♻️ Recovery snapshots
+### Recovery
+
+Si queremos llevar nuestro backup a otro servidor, podemos comprimir el repositorio y descomprimirlo en el destino
+Siempre lo haremos con sudo ya que las copias están hechas con permisos de root
+```bash
+# Comprimirlo (y nos llevamos el tar.gz donde queramos)
+sudo tar -czvf ~/backups.tar.gz /mnt/storage/backups
+
+# Descomprimirlo (no tiene que existir la carpeta /mnt/storage/backups)
+sudo tar -xvzf ~/backups.tar.gz -C /mnt/storage/
+```
+
+♻️ Ejecutamos el recovery que levanta el servicio, hace el restore y lo deja corriendo para que siga haciendo backups
 ```bash
 backupsctl recovery
 ```
+

@@ -96,9 +96,6 @@ mkdir -p /mnt/storage/media/{movies,tv,videos,youtube}
 sudo chown -R 1000:1000 /mnt/storage/torrents
 sudo chown -R 1000:1000 /mnt/storage/media
 
-mkdir -p /mnt/storage/backups
-sudo chown -R 1000:1000 /mnt/storage/backups
-
 mkdir -p /mnt/storage/filebrowser
 sudo chown -R 1000:1000 /mnt/storage/filebrowser
 
@@ -124,6 +121,7 @@ cd homeserver
 
 ### Modo de uso de los scripts para levantar los servicios
 
+Levantamos los servicios
 ```bash
 # Hacemos comprobaciones previas (opcional)
 /opt/docker/homeserver/stackctl dry-run
@@ -135,13 +133,19 @@ cd homeserver
 /opt/docker/homeserver/stackctl dry-run
 ```
 
+En este punto deberíamos configurar los servicios: [Configurar servicios](https://github.com/omarmpastor/homeserver/blob/main/doc/CONFIGURE_SERVICES.md)
+
+Una vez configurados los servicios, levantamos e servicio de backup
+```bash
+/opt/docker/homeserver/backupsctl up
+```
+
 [Ayuda completa de los scripts de isntalación](https://github.com/omarmpastor/homeserver/blob/main/doc/HELP_SCRIPTS.md)
 
 ## Modificar DNS
 
-Ahora tendremos que añadir las entradas tipo CNAME a nuestro DNS apuntando a nuestro servidor
+Ahora tendremos que añadir las entradas a nuestro DNS apuntando a nuestro servidor
 ```
-joplin.omp.home
 filebrowser.omp.home
 metube.omp.home
 sonarr.omp.home
@@ -155,8 +159,7 @@ jellyfin.omp.home
 gitea.omp.home
 dashboard.omp.home
 cockpit.omp.home
+dockhand.omp.home
+syncthing.omp.home
 ```
 
-## Configuramos los servicios
-
-[Configurar servicios](https://github.com/omarmpastor/homeserver/blob/main/doc/CONFIGURE_SERVICES.md)
