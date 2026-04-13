@@ -4,6 +4,13 @@
 
 Ahora vamos a ir configurando las apps
 
+## Dockhand
+
+Vamos a http://dockhand.omp.home
+
+Environments
+Settings > Authentication > 
+
 ## Dashboard
 
 Vamos a http://dashboard.omp.home

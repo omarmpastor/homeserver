@@ -42,6 +42,8 @@ services:
       - gitea_data:/data/gitea
       - filebrowser_config:/data/filebrowser
       - flame_data:/data/flame
+      - syncthing_config:/data/syncthing
+      - dockhand_data:/data/dockhand
 
 volumes:
   kopia_config:
@@ -67,6 +69,10 @@ volumes:
   filebrowser_config:
     external: true
   flame_data:
+    external: true
+  syncthing_config:
+    external: true
+  dockhand_data:
     external: true
 
 networks:

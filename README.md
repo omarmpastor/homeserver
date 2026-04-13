@@ -102,6 +102,9 @@ sudo chown -R 1000:1000 /mnt/storage/backups
 mkdir -p /mnt/storage/filebrowser
 sudo chown -R 1000:1000 /mnt/storage/filebrowser
 
+mkdir -p /mnt/storage/syncthing_data
+sudo chown -R 1000:1000 /mnt/storage/syncthing_data
+
 #mkdir -p /mnt/storage/nextcloud-data
 #sudo chown -R 33:33 /mnt/storage/nextcloud-data
 # 33 es el usuario www-data de apache
