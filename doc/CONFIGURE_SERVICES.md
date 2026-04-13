@@ -1,7 +1,5 @@
 # Configuración de apps y servicios
 
-> NO ACTUALIZADO!!!
-
 Ahora vamos a ir configurando las apps
 
 ## Dockhand
@@ -128,6 +126,23 @@ En el apartados css establecemos (mirar si es el nombre de la clase de las apps 
 }
 ```
 
+## Syncthing
+
+http://syncthing.omp.home/
+
+Vamos a Acciones > Ajustes > Interfaz gráfica y añadimos:
+* Usuario de la interfaz gráfica
+* Contraseña de la interfaz gráfica
+
+Ahora desde el dashboard pinchamos en el botón "+ Añadir carpeta"
+* Etiqueta de la carpeta: Homesync
+* ID de la carpeta: El que nos da por defecto
+* Ruta de la carpeta: /data/homesync
+
+Luego cuando añadamos un dispositivo a la sincronización, tendremos que habilitar la compartición en esta carpeta
+
+## qBittorrent
+
 Lo primero necesitamos conocer el password que nos ha puesto por defecto. Esto está en los logs del contenedor (Ejecutamos: `docker logs qbittorrent`)
 
 Vamos a http://qbittorrent.omp.home
@@ -193,8 +208,6 @@ Ahora vamos a Indexers (No a Settings > Indexers) -> Add Indexer y añadimos los
 ### Bazarr
 
 Nos conectamos a http://bazarr.omp.home
-
-### Bazarr
 
 Al arrancar nos aparece en esta página: http://bazarr.omp.home/settings/general
 - Security > Authentication > Form
