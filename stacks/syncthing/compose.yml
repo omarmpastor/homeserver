@@ -25,9 +25,10 @@ services:
       - "traefik.http.services.syncthing.loadbalancer.server.port=8384"
 
 volumes:
-	syncthing_config:
+  syncthing_config:
     external: true
 
 networks:
   traefik-net:
     external: true
+

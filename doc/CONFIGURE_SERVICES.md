@@ -8,8 +8,13 @@ Ahora vamos a ir configurando las apps
 
 Vamos a http://dockhand.omp.home
 
-Environments
-Settings > Authentication > 
+* Settings > Environments > Add Environment
+  * Name: Docker
+  * Connection type: Unix socket
+  * Source path: /var/run/docker.sock
+* Settings > Authentication > Users
+  * Añadimos un usuario
+  * Hay un botón de Authentication > Lo activamos y se pone en on
 
 ## Dashboard
 
@@ -81,6 +86,16 @@ const apps = [
     name: 'Metube',
     url: 'http://metube.omp.home',
     icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/metube.svg',
+  },
+  {
+    name: 'Dockhand',
+    url: 'http://dockhand.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/dockhand.png',
+  },
+  {
+    name: 'Syncthing',
+    url: 'http://syncthing.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/syncthing.svg',
   }
 ];
 
@@ -99,7 +114,7 @@ db.close();
 
 Ejecutamos
 ```bash
-cat inserts.js | docker exec -i flame node -
+cat ~/inserts.js | docker exec -i flame node -
 ```
 
 En el boton de configuracion de abajo a la izquierda, vamos a App y ponemos la contraseña que hemos puesto en la configuracion del contenedor
