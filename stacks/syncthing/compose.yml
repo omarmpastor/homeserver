@@ -27,3 +27,7 @@ services:
 volumes:
 	syncthing_config:
     external: true
+
+networks:
+  traefik-net:
+    external: true
