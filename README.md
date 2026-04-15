@@ -96,8 +96,8 @@ mkdir -p /mnt/storage/media/{movies,tv,videos,youtube}
 sudo chown -R 1000:1000 /mnt/storage/torrents
 sudo chown -R 1000:1000 /mnt/storage/media
 
-mkdir -p /mnt/storage/filebrowser
-sudo chown -R 1000:1000 /mnt/storage/filebrowser
+mkdir -p /mnt/storage/sftpgo_data
+sudo chown -R 1000:1000 /mnt/storage/sftpgo_data
 
 mkdir -p /mnt/storage/syncthing_data
 sudo chown -R 1000:1000 /mnt/storage/syncthing_data

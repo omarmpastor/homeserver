@@ -71,9 +71,9 @@ const apps = [
     icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/joplin.svg',
   },
   {
-    name: 'Filebrowser',
-    url: 'http://filebrowser.omp.home',
-    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/filebrowser-quantum.svg',
+    name: 'sFTPgo',
+    url: 'http://sftpgo_config.omp.home',
+    icon: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/sftpgo.png',
   },
   {
     name: 'Kopia',
@@ -126,9 +126,16 @@ En el apartados css establecemos (mirar si es el nombre de la clase de las apps 
 }
 ```
 
+## sFTPgo
+
+Vamos a http://sftpgo.omp.home/
+
+* Creamos un usuario adminsitrador
+* Dentro ya del administrado vamos a http://sftpgo.omp.home/web/admin/users y creamos un usuario
+
 ## Syncthing
 
-http://syncthing.omp.home/
+Vamos a http://syncthing.omp.home/
 
 Vamos a Acciones > Ajustes > Interfaz gráfica y añadimos:
 * Usuario de la interfaz gráfica

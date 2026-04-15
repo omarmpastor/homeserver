@@ -7,7 +7,7 @@ services:
       - ${STORAGE}/filebrowser:/srv
       - filebrowser_config:/home/filebrowser/data
     ports:
-      - 8082:80
+      - 8083:80
     restart: unless-stopped
     networks:
       - traefik-net

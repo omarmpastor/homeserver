@@ -40,7 +40,7 @@ services:
       - jackett_data:/data/jackett
       - jellyfin_data:/data/jellyfin
       - gitea_data:/data/gitea
-      - filebrowser_config:/data/filebrowser
+      - sftpgo_config:/data/filebrowser
       - flame_data:/data/flame
       - syncthing_config:/data/syncthing
       - dockhand_data:/data/dockhand
@@ -66,7 +66,7 @@ volumes:
     external: true
   gitea_data:
     external: true
-  filebrowser_config:
+  sftpgo_config:
     external: true
   flame_data:
     external: true
