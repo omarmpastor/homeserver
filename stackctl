@@ -65,6 +65,34 @@ case "$COMMAND" in
   purge-volumes)
     delete_volumes
     ;;
+  
+  stack)
+    STACK_NAME="$2"
+    ACTION="$3"
+
+    if [[ -z "$STACK_NAME" || -z "$ACTION" ]]; then
+      echo "Uso: $0 stack <nombre_stack> [up|down]"
+      exit 1
+    fi
+
+    load_env
+
+    case "$ACTION" in
+      up)
+        echo "Levantando stack: $STACK_NAME"
+        # deploy_stack "$STACK_NAME"
+        ;;
+      down)
+        echo "Deteniendo stack: $STACK_NAME"
+        # down_stack "$STACK_NAME"
+        ;;
+      *)
+        echo "Acción inválida: $ACTION"
+        echo "Uso: $0 stack <nombre_stack> [up|down]"
+        exit 1
+        ;;
+    esac
+    ;;
 
   status)
     docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
