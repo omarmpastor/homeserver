@@ -18,7 +18,7 @@ deploy_stack() {
   fi
 
   echo "[UP] $STACK_NAME"
-  docker compose -p "$STACK_NAME" -f "$SCRIPT_DIR/stacks/$s/compose.yml" up -d
+  docker compose -p "$STACK_NAME" -f "$SCRIPT_DIR/stacks/$STACK_NAME/compose.yml" up -d
 }
 
 down_stack() {
@@ -37,7 +37,7 @@ down_stack() {
   fi
 
   echo "[DOWN] $STACK_NAME"
-  docker compose -p "$STACK_NAME" -f "$SCRIPT_DIR/stacks/$s/compose.yml" up -d
+  docker compose -p "$STACK_NAME" -f "$SCRIPT_DIR/stacks/$STACK_NAME/compose.yml" up -d
 }
 
 deploy_stacks() {

@@ -80,11 +80,11 @@ case "$COMMAND" in
     case "$ACTION" in
       up)
         echo "Levantando stack: $STACK_NAME"
-        # deploy_stack "$STACK_NAME"
+        deploy_stack "$STACK_NAME"
         ;;
       down)
         echo "Deteniendo stack: $STACK_NAME"
-        # down_stack "$STACK_NAME"
+        down_stack "$STACK_NAME"
         ;;
       *)
         echo "Acción inválida: $ACTION"
