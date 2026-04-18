@@ -1,0 +1,30 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8084:80/tcp"
+    environment:
+      TZ: 'Europe/Madrid'
+      FTLCONF_webserver_api_password: ${APP_PASSWORD}
+      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_logging_pihole_log_level: 0
+    volumes:
+      - 'etc-pihole:/etc/pihole'
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.omp.home`)"
+      - "traefik.http.routers.pihole.entrypoints=web"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+
+volumes:
+  etc-pihole:
+
+networks:
+  traefik-net:
+    external: true
