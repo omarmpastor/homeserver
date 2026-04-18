@@ -146,7 +146,7 @@ Una vez configurados los servicios, levantamos e servicio de backup
 
 Ahora tendremos que añadir las entradas a nuestro DNS apuntando a nuestro servidor
 ```
-filebrowser.omp.home
+sftpgo.omp.home
 metube.omp.home
 sonarr.omp.home
 radarr.omp.home

@@ -34,6 +34,13 @@ stackctl purge-volumes
 stackctl status
 ```
 
+💠 Levantar o bajar un servicio
+```bash
+stackctl stack [service] up
+
+stackctl stack [service] down
+```
+
 ## Backups
 
 Una vez levantemos los contenedores y los configuremos, levantamos el servicio de backup y hace el primer backup automáticamente

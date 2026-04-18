@@ -30,6 +30,7 @@ Comandos:
   dry-run          Valida la infraestructura sin aplicar cambios
   purge-volumes    Elimina los volúmenes gestionados
   status           Muestra el estado de los contenedores
+  stack [service]  Levantar (up) o bajar (down) un servicio
 
 Ejemplos:
   stackctl up

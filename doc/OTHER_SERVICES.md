@@ -1,5 +1,10 @@
 # Otros servicios
 
+Podemos añadir otros servicios de la carpeta stacks con el comando
+```bash
+stackctl stack [service] up
+```
+
 ## Dashboard Flame
 
 Tenemos activo Heimdall, pero podemos cambiarlo por Flame
