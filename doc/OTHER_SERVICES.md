@@ -118,3 +118,57 @@ En el apartados css establecemos (mirar si es el nombre de la clase de las apps 
   font-size: 20px !important;
 }
 ```
+
+
+### Bazarr (comentada en el stack media-stack)
+
+Nos conectamos a http://bazarr.omp.home
+
+Al arrancar nos aparece en esta página: http://bazarr.omp.home/settings/general
+- Security > Authentication > Form
+- Establecemos > Username y Password
+- Guardamos
+
+
+Vamos a http://bazarr.omp.home/settings/languages
+- Languages Filter > Escribimos > Spanish English (Nos autocompleta)
+- Languages Profile > añadimos 3 (por separado, habra que pinchar en Add new profile tres veces):
+    - Name: Spanish, Tag es
+    - Add Language: Seleccionamos Spanish, Normal or hearing-impaired
+    - Name: English, Tag en
+    - Add Language: Seleccionamos English, Normal or hearing-impaired
+    - Name: Spanish-English, Tag vacio
+    - Add Language: Seleccionamos Spanish, Normal or hearing-impaired
+    - Add Language: Seleccionamos English, Normal or hearing-impaired
+- Default Language Profiles For Newly Added Shows
+    - Activamos movies y series y establecemos Spanish-English
+
+
+Guardamos (arriba a la izquierda hay un icono de guardar)
+
+Vamos a http://bazarr.omp.home/settings/sonarr
+- Lo activamos
+- Address: sonarr
+- API Key: Ponemos lo que hay en En Sonarr > Settings > General > API Key
+- Path Mappings (No aparecera hasta que guardemos)
+    - Sonar: /storage/TV/ - Bazarr: /tv/
+- Guardamos
+
+Vamos a http://bazarr.omp.home/settings/radarr
+- Lo activamos
+- Address: radarr
+- API Key: Ponemos lo que hay en En Radarr > Settings > General > API Key
+- Path Mappings (No aparecera hasta que guardemos)
+- Radarr: /storage/Movies/ - Bazarr: /movies/
+- Guardamos
+
+
+Vamos a http://bazarr.omp.home/settings/providers
+- Añadimos > Subtitulamos.tv
+- Añadimos > Supersubtitles
+
+Vamos a http://bazarr.omp.home/settings/series
+- Marcamos el icono de la izquierda "Mass edit" para establecer en todos Spanish-English
+
+Vamos a http://bazarr.omp.home/settings/movies
+- Marcamos el icono de la izquierda "Mass edit" para establecer en todos Spanish-English

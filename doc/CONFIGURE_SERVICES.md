@@ -17,20 +17,20 @@ Vamos a http://dockhand.omp.home
 ## Heimdall dashboard
 
 Añadimos las apps:
-https://cockpit.omp.home:9090
-http://gitea.omp.home
-http://qbittorrent.omp.home
-http://jellyfin.omp.home
-http://prowlarr.omp.home
-http://radarr.omp.home
-http://sonarr.omp.home
-http://bazarr.omp.home
-http://joplin.omp.home
-http://sftpgo_config.omp.home
-http://kopia.omp.home
-http://metube.omp.home
-http://dockhand.omp.home
-http://syncthing.omp.home
+* https://cockpit.omp.home:9090
+* http://gitea.omp.home
+* http://qbittorrent.omp.home
+* http://jellyfin.omp.home
+* http://prowlarr.omp.home
+* http://radarr.omp.home
+* http://sonarr.omp.home
+* http://bazarr.omp.home
+* http://joplin.omp.home
+* http://sftpgo.omp.home
+* http://kopia.omp.home
+* http://metube.omp.home
+* http://dockhand.omp.home
+* http://syncthing.omp.home
 
 ## sFTPgo
 
@@ -70,10 +70,10 @@ Nos conectamos a http://radarr.omp.home para radarr y http://sonarr.omp.home par
 
 La primera vez que nos conectemos nos pedira que establezcamos un login:
 
-Authentication Method: Form (Login Page)
-Authentication Required: Disabled for Local Addresses
-Username: wyse
-Password: Homeserver.26
+* Authentication Method: Form (Login Page)
+* Authentication Required: Disabled for Local Addresses
+* Username: [username]
+* Password: [password]
 
 Vamos a Settings -> Media Management -> Pinchamos en el icono de arriba "Show Advanced"
 - Dejamos marcado -> Use Hardlinks instead of Copy
@@ -83,11 +83,18 @@ Vamos a Settings -> Media Management -> Pinchamos en el icono de arriba "Show Ad
 Vamos a Settings -> Download Clients -> + -> qBittorrent
 - Host: qbittorrent
 - Port: 8090
-- Username: admin
-- Password: Homeserver.26
+- Username: [username]
+- Password: [password]
 - Dejamos marcado: Remove imported downloads from dowload client history
 
 Vamos a Settings -> Profiles -> Entramos a cada uno de ellos -> Language -> Spanish (sino no nos busara en prowlarr en español)
+
+### Jackett
+
+Nos conectamos a http://jackett.omp.home
+
+Ponemos una contraseña de administrador en [Admin password]
+Pinchamos en Add Indexer -> DonTorrent (tarda en añadirlo, comprueba un rato)
 
 ### Prowlarr
 
@@ -95,10 +102,10 @@ Nos conectamos a http://prowlarr.omp.home
 
 La primera vez que nos conectemos nos pedira que establezcamos un login:
 
-Authentication Method: Form (Login Page)
-Authentication Required: Disabled for Local Addresses
-Username: wyse
-Password: Homeserver.26
+* Authentication Method: Form (Login Page)
+* Authentication Required: Disabled for Local Addresses
+* Username: [username]
+* Password: [password]
 
 Vamos a Settings -> Apps -> Añadimos Radarr
 Prowlarr Server: http://prowlarr:9696
@@ -113,64 +120,21 @@ API Key: Vamos a sonarr -> Settings -> General -> API Key y la copiamos
 Vamos a Settings -> Download Clients -> + -> qBittorrent
 - Host: qbittorrent
 - Port: 8090
-- Username: admin
-- Password: Homeserver.26
+- Username: [username]
+- Password: [password]
 
 Ahora vamos a Indexers (No a Settings > Indexers) -> Add Indexer y añadimos los que queramos
 
-### Bazarr
-
-Nos conectamos a http://bazarr.omp.home
-
-Al arrancar nos aparece en esta página: http://bazarr.omp.home/settings/general
-- Security > Authentication > Form
-- Establecemos > Username: wyse y Password: Homeserver.26
-- Guardamos
-
-
-Vamos a http://bazarr.omp.home/settings/languages
-- Languages Filter > Escribimos > Spanish English (Nos autocompleta)
-- Languages Profile > añadimos 3 (por separado, habra que pinchar en Add new profile tres veces):
-    - Name: Spanish, Tag es
-    - Add Language: Seleccionamos Spanish, Normal or hearing-impaired
-    - Name: English, Tag en
-    - Add Language: Seleccionamos English, Normal or hearing-impaired
-    - Name: Spanish-English, Tag vacio
-    - Add Language: Seleccionamos Spanish, Normal or hearing-impaired
-    - Add Language: Seleccionamos English, Normal or hearing-impaired
-- Default Language Profiles For Newly Added Shows
-    - Activamos movies y series y establecemos Spanish-English
-
-
-Guardamos (arriba a la izquierda hay un icono de guardar)
-
-Vamos a http://bazarr.omp.home/settings/sonarr
-- Lo activamos
-- Address: sonarr
-- API Key: Ponemos lo que hay en En Sonarr > Settings > General > API Key
-- Path Mappings (No aparecera hasta que guardemos)
-    - Sonar: /storage/TV/ - Bazarr: /tv/
-- Guardamos
-
-Vamos a http://bazarr.omp.home/settings/radarr
-- Lo activamos
-- Address: radarr
-- API Key: Ponemos lo que hay en En Radarr > Settings > General > API Key
-- Path Mappings (No aparecera hasta que guardemos)
-- Radarr: /storage/Movies/ - Bazarr: /movies/
-- Guardamos
-
-
-Vamos a http://bazarr.omp.home/settings/providers
-- Añadimos > Subtitulamos.tv
-- Añadimos > Supersubtitles
-
-Vamos a http://bazarr.omp.home/settings/series
-- Marcamos el icono de la izquierda "Mass edit" para establecer en todos Spanish-English
-
-Vamos a http://bazarr.omp.home/settings/movies
-- Marcamos el icono de la izquierda "Mass edit" para establecer en todos Spanish-English
-
+* Elitetorrent-wf
+* MoviesDVDR
+* Vamos a añadir DonTorrent desde Jackett (no me va!!):
+  * Le damos a añadir y elegimos "Generic Torznab"
+  * Name: DonTorrent
+  * Enable: Activado
+  * Redirect: Desactivado
+  * URL (hay un botón "Copy Torznab Feed" en jackett): http://[IP_SERVIDOR]:9117/api/v2.0/indexers/dontorrent/results/torznab/
+  * API Key: Copiamos la API key de Jackett
+  * Pinchamos en Test y Guardamos
 
 ## Jellyfin
 
@@ -179,8 +143,8 @@ Arrancamos el proyecto: Desde arcane > Proyectos > Elegimos jellyfin > Subir
 Vamos a http://jellyfin.omp.home
 
 Usamos el asistente para configurar el servidor estableciendo en Español y poniendo usuario y contraseña:
-Usuario: wyse
-Password: Homeserver.26
+* Username: [username]
+* Password: [password]
 
 Configuramos 4 bibliotecas multimedia
 - Tipo: Peliculas, Nombre: Peliculas, Carpetas: /data/movies, Idioma preferido de visualizado: Spanish Castillian, Pais: Spain
@@ -201,9 +165,9 @@ Vamos a http://gitea.omp.home
 Ahora nos sale la configuracion por defecto, vamos bajo del todo y pinchamos en "Instalar Gitea"
 
 Nos aparece para crear un usuario:
-Usuario: wyse
-Email: wyse@omp.lab
-Password: Homeserver.26
+* Username: [username]
+* Email: [username]@omp.home
+* Password: [password]
 
 Ahora vamos a http://gitea.omp.home/-/admin/users y creamos un usuario
 

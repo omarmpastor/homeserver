@@ -36,7 +36,6 @@ services:
       - prowlarr_data:/data/prowlarr
       - sonarr_data:/data/sonarr
       - radarr_data:/data/radarr
-      - bazarr_data:/data/bazarr
       - jackett_data:/data/jackett
       - jellyfin_data:/data/jellyfin
       - gitea_data:/data/gitea
@@ -57,8 +56,6 @@ volumes:
   sonarr_data:
     external: true
   radarr_data:
-    external: true
-  bazarr_data:
     external: true
   jackett_data:
     external: true
