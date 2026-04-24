@@ -20,9 +20,9 @@ services:
       - "traefik.http.routers.sftpgo.rule=Host(`sftpgo.omp.home`)"
       - "traefik.http.routers.sftpgo.entrypoints=web"
       - "traefik.http.services.sftpgo.loadbalancer.server.port=8080"
-      - "traefik.http.routers.webdavsftpgo.rule=Host(`webdavsftpgo.omp.home`)"
-      - "traefik.http.routers.webdavsftpgo.entrypoints=web"
-      - "traefik.http.services.webdavsftpgo.loadbalancer.server.port=8090"
+      # - "traefik.http.routers.webdavsftpgo.rule=Host(`webdavsftpgo.omp.home`)"
+      # - "traefik.http.routers.webdavsftpgo.entrypoints=web"
+      # - "traefik.http.services.webdavsftpgo.loadbalancer.server.port=8090"
 
 volumes:
   sftpgo_config:
