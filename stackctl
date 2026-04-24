@@ -10,11 +10,11 @@ source "$SCRIPT_DIR/lib/pull.sh"
 source "$SCRIPT_DIR/lib/volumes.sh"
 source "$SCRIPT_DIR/lib/checks.sh"
 
-# Order matters
-STACKS=("sftpgo" "heimdall" "gitea" "jellyfin" "media-stack" "metube" "traefik" "dockhand" "syncthing")
+# Order matters syncthing
+STACKS=("sftpgo" "heimdall" "gitea" "jellyfin" "media-stack" "metube" "traefik" "dockhand")
 # Stacks disabled: nextcloud wireguard joplin filebrowser flame
-VOLUMES=("sftpgo_config" "gitea_data" "jellyfin_data" "qbittorrent_data" "prowlarr_data" "sonarr_data" "radarr_data" "jackett_data" "dockhand_data" "syncthing_config")
-# Volumes disabled: nextcloud_config nextcloud_custom_apps wireguard_conf wireguard_modules joplin_data filebrowser_config flame_data bazarr_data
+VOLUMES=("sftpgo_config" "gitea_data" "jellyfin_data" "qbittorrent_data" "prowlarr_data" "sonarr_data" "radarr_data" "jackett_data" "dockhand_data")
+# Volumes disabled: nextcloud_config nextcloud_custom_apps wireguard_conf wireguard_modules joplin_data filebrowser_config flame_data bazarr_data syncthing_config
 
 COMMAND="${1:-}"
 
