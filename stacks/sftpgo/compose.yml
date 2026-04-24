@@ -6,6 +6,10 @@ services:
     ports:
       - 8083:8080
       - 2022:2022
+      - 8091:8090
+    environment:
+      - SFTPGO_WEBDAVD__BINDINGS__0__PORT=8090
+      - SFTPGO_WEBDAVD__BINDINGS__0__ADDRESS=0.0.0.0
     volumes:
       - ${STORAGE}/sftpgo_data:/srv/sftpgo 
       - sftpgo_config:/var/lib/sftpgo
@@ -16,6 +20,9 @@ services:
       - "traefik.http.routers.sftpgo.rule=Host(`sftpgo.omp.home`)"
       - "traefik.http.routers.sftpgo.entrypoints=web"
       - "traefik.http.services.sftpgo.loadbalancer.server.port=8080"
+      - "traefik.http.routers.webdavsftpgo.rule=Host(`webdavsftpgo.omp.home`)"
+      - "traefik.http.routers.webdavsftpgo.entrypoints=web"
+      - "traefik.http.services.webdavsftpgo.loadbalancer.server.port=8090"
 
 volumes:
   sftpgo_config:
