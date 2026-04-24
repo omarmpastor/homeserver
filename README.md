@@ -147,19 +147,18 @@ Una vez configurados los servicios, levantamos e servicio de backup
 Ahora tendremos que añadir las entradas a nuestro DNS apuntando a nuestro servidor
 ```
 sftpgo.omp.home
+webdavsftpgo.omp.home
 metube.omp.home
 sonarr.omp.home
 radarr.omp.home
 prowlarr.omp.home
 qbittorrent.omp.home
 jackett.omp.home
-bazarr.omp.home
 kopia.omp.home
 jellyfin.omp.home
 gitea.omp.home
 dashboard.omp.home
 cockpit.omp.home
 dockhand.omp.home
-syncthing.omp.home
 ```
 
