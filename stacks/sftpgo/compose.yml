@@ -13,6 +13,7 @@ services:
     volumes:
       - ${STORAGE}/sftpgo_data:/srv/sftpgo 
       - sftpgo_config:/var/lib/sftpgo
+    restart: unless-stopped
     networks:
       - traefik-net
     labels:
