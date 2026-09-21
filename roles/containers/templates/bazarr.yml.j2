@@ -1,0 +1,29 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:{{ item.version }}
+    container_name: bazarr
+    environment:
+      - PUID={{ PUID }}
+      - PGID={{ PGID }}
+      - TZ={{ timezone }}
+    volumes:
+      - bazarr_data:/config
+      - {{ storage_path }}/media/movies:/movies:Z
+      - {{ storage_path }}/media/tvshows:/tvshows:Z
+    ports:
+      - 6767:{{ item.port }}
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  bazarr_data:
+
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

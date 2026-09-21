@@ -1,0 +1,19 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+#
+# Managed by Ansible
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug {{ network_interface | default(ansible_facts["default_ipv4"]["interface"]) }}
+iface {{ network_interface | default(ansible_facts["default_ipv4"]["interface"]) }} inet static
+address {{ network.address }}/{{ network.prefix }}
+gateway {{ network.gateway }}
+{% if network.dns is defined and network.dns | length > 0 %}
+dns-nameservers {{ network.dns | join(' ') }}
+{% endif %}

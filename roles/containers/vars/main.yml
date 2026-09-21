@@ -1,0 +1,86 @@
+traefik_network_name: traefik_network
+
+networks:
+  - "{{ traefik_network_name }}"
+
+traefik_labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.{{ item.name }}.rule=Host(`{{ item.name }}.{{ homeserver_domain }}`)"
+  - "traefik.http.routers.{{ item.name }}.entrypoints=web"
+  - "traefik.http.services.{{ item.name }}.loadbalancer.server.port={{ item.port }}"
+
+services:
+  - name: traefik
+    version: "v3.6"
+  - name: heimdall
+    version: "latest"
+    port: 80
+  - name: gitea
+    version: "1.25.5"
+    port: 3000
+  - name: nextcloud
+    version: "stable-apache"
+    port: 80
+    storage_local:
+      owner: 33
+      group: 33
+      directories:
+        - "{{ storage_path }}/nextcloud_data"
+  - name: jellyfin
+    version: "latest"
+    port: 8096
+    storage_local:
+      owner: "{{ PUID }}"
+      group: "{{ PGID }}"
+      directories:
+        - "{{ storage_path }}/media/movies"
+        - "{{ storage_path }}/media/tvshows"
+        - "{{ storage_path }}/media/videos"
+  - name: qbittorrent
+    version: "latest"
+    port: 8090
+    storage_local:
+      owner: "{{ PUID }}"
+      group: "{{ PGID }}"
+      directories:
+        - "{{ storage_path }}/torrents"
+  - name: bazarr
+    version: "latest"
+    port: 6767
+  - name: jackett
+    version: "latest"
+    port: 9117
+  - name: prowlarr
+    version: "latest"
+    port: 9696
+  - name: radarr
+    version: "latest"
+    port: 7878
+    storage_local:
+      owner: "{{ PUID }}"
+      group: "{{ PGID }}"
+      directories:
+        - "{{ storage_path }}/media/movies"
+  - name: sonarr
+    version: "latest"
+    port: 8989
+    storage_local:
+      owner: "{{ PUID }}"
+      group: "{{ PGID }}"
+      directories:
+        - "{{ storage_path }}/media/tvshows"
+  - name: pihole
+    version: "latest"
+    port: 80
+    password: "{{ apps_password | default('admin123') }}"
+
+
+# Servicios configurados, solo descomentar para usar
+
+  # - name: metube
+  #   version: "latest"
+  #   port: 8081
+
+  # - name: dockhand
+  #   version: "latest"
+  #   port: 3000

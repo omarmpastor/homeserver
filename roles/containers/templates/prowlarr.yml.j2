@@ -1,0 +1,26 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:{{ item.version }}
+    container_name: prowlarr
+    environment:
+      - PUID={{ PUID }}
+      - PGID={{ PGID }}
+      - TZ={{ timezone }}
+    volumes:
+      - prowlarr_data:/config
+    ports:
+      - 9696:{{ item.port }}
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  prowlarr_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

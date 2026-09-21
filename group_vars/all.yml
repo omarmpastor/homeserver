@@ -1,0 +1,28 @@
+storage_path: /mnt/storage
+docker_containers_dir: /opt/containers
+
+timezone: Europe/Madrid
+PUID: 1000
+PGID: 1000
+
+packages:
+  - curl
+  - vim
+  - git
+  - unrar-free
+  - htop
+  - cockpit
+  - udisks2-lvm2
+  - udisks2-btrfs
+
+# Network
+network:
+  address: 192.168.110.136
+  prefix: 24
+  gateway: 192.168.110.2
+  dns:
+    - 9.9.9.9
+
+homeserver_name: homeserver
+homeserver_domain: omp.home
+

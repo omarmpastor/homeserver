@@ -1,0 +1,29 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:{{ item.version }}
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8084:{{ item.port }}/tcp"
+    environment:
+      TZ: "{{ timezone }}"
+      FTLCONF_webserver_api_password: "${FTLCONF_webserver_api_password}"
+      FTLCONF_dns_listeningMode: 'ALL'
+      FTLCONF_logging_pihole_log_level: 0
+    volumes:
+      - "etc-pihole:/etc/pihole"
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  etc-pihole:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

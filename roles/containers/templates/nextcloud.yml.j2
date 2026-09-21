@@ -1,0 +1,29 @@
+services:
+  nextcloud:
+    image: docker.io/library/nextcloud:{{ item.version }}
+    restart: unless-stopped
+    ports:
+      - "8083:{{ item.port }}"
+    volumes:
+      - nextcloud_config:/var/www/html/config
+      - nextcloud_custom_apps:/var/www/html/custom_apps
+      - {{ storage_path }}/nextcloud_data:/var/www/html/data:Z
+    environment:
+      - SQLITE_DATABASE=dbnextcloud
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_TRUSTED_DOMAINS}
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  nextcloud_config:
+  nextcloud_custom_apps:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

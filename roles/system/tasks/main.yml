@@ -1,0 +1,56 @@
+- name: Configure /etc/hosts
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ homeserver_name }}"
+
+- name: Set system timezone
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: Configure network on Debian
+  ansible.builtin.template:
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_facts['distribution'] == 'Debian'
+
+- name: Configure network on Ubuntu
+  ansible.builtin.template:
+    src: netplan.j2
+    dest: /etc/netplan/01-network.yaml
+    owner: root
+    group: root
+    mode: '0600'
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: Grant power management to user
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/power
+    content: "{{ ansible_user }} ALL=(ALL) NOPASSWD: /usr/sbin/poweroff, /usr/sbin/reboot, /usr/sbin/shutdown\n"
+    owner: root
+    group: root
+    mode: '0440'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Upgrade all packages
+  apt:
+    upgrade: dist
+
+- name: Install basic system packages
+  apt:
+    name: "{{ packages }}"
+    state: present

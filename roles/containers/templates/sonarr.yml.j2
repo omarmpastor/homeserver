@@ -1,0 +1,28 @@
+services:
+  sonarr:
+    image: linuxserver/sonarr:{{ item.version }}
+    container_name: sonarr
+    ports:
+      - 8989:{{ item.port }}
+    volumes:
+      - sonarr_data:/config
+#      - {{ storage_path }}/torrents:/downloads:Z
+      - {{ storage_path }}/media/tvshows:/storage/TV:Z
+    environment:
+      - PUID={{ PUID }}
+      - PGID={{ PGID }}
+      - TZ={{ timezone }}
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  sonarr_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

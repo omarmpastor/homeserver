@@ -1,0 +1,31 @@
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: lscr.io/linuxserver/jellyfin:{{ item.version }}
+    ports:
+      - "8096:{{ item.port }}"
+    environment:
+      - PUID={{ PUID }}
+      - PGID={{ PGID }}
+      - TZ={{ timezone }}
+    volumes:
+      - jellyfin_data:/config
+      - jellyfin_cache:/config/cache
+      - {{ storage_path }}/media/movies:/data/movies:Z
+      - {{ storage_path }}/media/tvshows:/data/tvshows:Z
+      - {{ storage_path }}/media/videos:/data/videos:Z
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  jellyfin_data:
+  jellyfin_cache:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

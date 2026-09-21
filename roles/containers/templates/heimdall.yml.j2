@@ -1,0 +1,27 @@
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:{{ item.version }}
+    container_name: heimdall
+    environment:
+      - PUID={{ PUID }}
+      - PGID={{ PGID }}
+      - TZ={{ timezone }}
+    volumes:
+      - heimdall_config:/config
+    ports:
+      - "8085:{{ item.port }}"
+      #- "8443:443"
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  heimdall_config:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

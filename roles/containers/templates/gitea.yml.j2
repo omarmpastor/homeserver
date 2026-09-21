@@ -1,0 +1,24 @@
+services:
+  gitea:
+    image: docker.gitea.com/gitea:{{ item.version }}
+    container_name: gitea
+    restart: unless-stopped
+    volumes:
+      - gitea_data:/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:{{ item.port }}"
+      - "2222:2222"
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  gitea_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

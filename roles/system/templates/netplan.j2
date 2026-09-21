@@ -1,0 +1,23 @@
+# Managed by Ansible
+# Do not edit manually
+
+network:
+  version: 2
+  renderer: networkd
+
+  ethernets:
+    {{ network_interface | default(ansible_default_ipv4.interface) }}:
+      addresses:
+        - "{{ network.address }}/{{ network.prefix }}"
+
+      routes:
+        - to: default
+          via: "{{ network.gateway }}"
+
+{% if network.dns is defined and network.dns | length > 0 %}
+      nameservers:
+        addresses:
+{% for server in network.dns %}
+          - "{{ server }}"
+{% endfor %}
+{% endif %}

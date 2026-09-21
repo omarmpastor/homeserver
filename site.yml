@@ -1,0 +1,8 @@
+- hosts: homeserver
+  become: true
+  vars_files:
+    - vault.yml
+  roles:
+    - system
+    - docker
+    - containers

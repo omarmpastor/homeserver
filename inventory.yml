@@ -1,0 +1,6 @@
+all:
+  children:
+    homeserver:
+      hosts:
+        192.168.110.136:
+          ansible_user: sysroot

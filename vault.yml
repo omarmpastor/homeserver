@@ -1,0 +1,4 @@
+# Encrypted secrets go here
+# Use: ansible-vault encrypt vault.yml
+apps_user: wyse
+apps_password: "Homeserver.26"

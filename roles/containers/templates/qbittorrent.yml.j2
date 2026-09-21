@@ -1,0 +1,27 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:{{ item.version }}
+    container_name: qbittorrent
+    ports:
+      - "8090:{{ item.port }}"
+      - 6881:6881
+      - 6881:6881/udp
+    environment:
+      - PUID={{ PUID }}
+      - PGID={{ PGID }}
+      - TZ={{ timezone }}
+      - WEBUI_PORT={{ item.port }}
+      # - TORRENTING_PORT=6881
+    volumes:
+      - qbittorrent_data:/config
+      - {{ storage_path }}/torrents:/downloads
+    networks:
+      - {{ traefik_network_name }}
+    restart: unless-stopped
+
+volumes:
+  qbittorrent_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true
