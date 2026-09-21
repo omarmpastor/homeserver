@@ -9,7 +9,7 @@ sudo apt install -y ssh python3
 sudo systemctl enable --now ssh
 ```
 
-### Si vamos a montar una unidad externa, este es el momento
+### Si vamos a montar una unidad externa, lo hacemos ahora
 
 Formateamos el disco
 ```sh
@@ -53,7 +53,7 @@ sudo chown -R 1000:1000 /mnt/storage
 
 ## Preparacion del entorno
 
-Clonamos el repositorio `gìt clone https://gitlab.com/omarmpastor/homeserver2026.git` y entramos con `cd homeserver2026`
+Clonamos el repositorio `gìt clone https://github.com/omarmpastor/homeserver.git` y entramos con `cd homeserver`
 
 * Editamos el archivo de secretos en `vault.yml`
 * Editamos las variables en `group_vars/all.yml`
