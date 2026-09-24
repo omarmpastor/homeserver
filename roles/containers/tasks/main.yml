@@ -1,12 +1,10 @@
-- name: Check that storage path exists
-  ansible.builtin.stat:
+- name: Ensure storage path exists
+  ansible.builtin.file:
     path: "{{ storage_path }}"
-  register: storage_path_check
-
-- name: Fail if storage path does not exist
-  ansible.builtin.fail:
-    msg: "The storage path '{{ storage_path }}' does not exist."
-  when: not storage_path_check.stat.exists
+    state: directory
+    owner: "{{ PUID | default(1000) }}"
+    group: "{{ PGID | default(1000) }}"
+    mode: '0755'
 
 - name: Create service storage local directories
   ansible.builtin.file:

@@ -1,4 +1,4 @@
-storage_path: /mnt/storage
+storage_path: /storage
 docker_containers_dir: /opt/containers
 
 timezone: Europe/Madrid

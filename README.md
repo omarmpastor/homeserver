@@ -9,41 +9,7 @@ sudo apt install -y ssh python3
 sudo systemctl enable --now ssh
 ```
 
-### Si vamos a montar una unidad externa, lo hacemos ahora
-
-Formateamos el disco
-```sh
-sudo wipefs -a /dev/sdX
-sudo cfdisk /dev/sdX
-sudo mkfs.ext4 -m 0 /dev/sdX1
-```
-
-Montamos el disco
-```sh
-sudo mkdir /mnt/storage
-sudo mount /dev/sdX1 /mnt/storage
-sudo chown -R 1000:1000 /mnt/storage
-
-# sacamos el UUID del disco
-sudo blkid /dev/sdX1
-```
-
-Añadimos a /etc/fstab
-```sh
-UUID="xxxxxxxxxxxxxxxxxx"       /mnt/storage    ext4            defaults	0 2
-```
-
-Recargamos y montamos
-```sh
-# Primero desmontamos
-sudo umount /mnt/storage
-
-sudo systemctl daemon-reload
-sudo mount -a
-```
-
-### Si vamos a montar una unidad, creamos el directorio donde se guardaran los datos
-
+### Creamos el directorio donde guardar los datos
 
 Si cambiamos este directorio, lo cambiamos tambien en `group_vars/all.yml/storage_path`
 ```sh
