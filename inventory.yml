@@ -2,5 +2,5 @@ all:
   children:
     homeserver:
       hosts:
-        192.168.122.143:
+        192.168.122.141:
           ansible_user: sysroot
