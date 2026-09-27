@@ -9,22 +9,16 @@ sudo apt install -y ssh python3
 sudo systemctl enable --now ssh
 ```
 
-### Creamos el directorio donde guardar los datos
-
-Si cambiamos este directorio, lo cambiamos tambien en `group_vars/all.yml/storage_path`
-```sh
-sudo mkdir /mnt/storage
-sudo chown -R 1000:1000 /mnt/storage
-```
-
 ## Preparacion del entorno
 
-Clonamos el repositorio `gìt clone https://github.com/omarmpastor/homeserver.git` y entramos con `cd homeserver`
+Clonamos el repositorio `git clone https://github.com/omarmpastor/homeserver.git` y entramos con `cd homeserver`
 
 * Editamos el archivo de secretos en `vault.yml`
 * Editamos las variables en `group_vars/all.yml`
 * Revisamos los servicios que queremos usar y los que no los comentamos en `roles/containers/vars/main.yml`
 * Si queremos cifrar los secretos, ejecutamos `ansible-vault encrypt vault.yml`
+
+> En este punto deberiamos revisar el directorio donde se van a guardar los datos `group_vars/all.yml/storage_path`
 
 
 ## Instalar
