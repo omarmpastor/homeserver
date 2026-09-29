@@ -2,24 +2,6 @@
 
 Ahora vamos a ir configurando las apps
 
-## Pihole
-
-Configuramos Pihole como DNS primario en nuestro router y lo configuramos http://IP:8084/admin/login:
-
-Introducimos la constraseña que tenemos definida en el archivo `vault.yml/apps_password`
-
-Vamos a Settings -> Local DNS Records y en List of local DNS records añadimos en cada una como Associated IP, la de nuestro servidor y como Domain:
-* cockpit.omp.home
-* nextcloud.omp.home
-* qbittorrent.omp.home
-* jellyfin.omp.home
-* prowlarr.omp.home
-* jackett.omp.home
-* radarr.omp.home
-* sonarr.omp.home
-* bazarr.omp.home
-* pihole.omp.home
-
 ## Heimdall dashboard
 
 Para acceder vamos a dashboard.omp.home (o http://IP:8085)
@@ -271,3 +253,21 @@ Vamos a http://dockhand.omp.home
 * Settings > Authentication > Users
   * Añadimos un usuario
   * Hay un botón de Authentication > Lo activamos y se pone en on
+
+## Pihole
+
+Configuramos Pihole como DNS primario en nuestro router y lo configuramos http://IP:8084/admin/login:
+
+Introducimos la constraseña que tenemos definida en el archivo `vault.yml/apps_password`
+
+Vamos a Settings -> Local DNS Records y en List of local DNS records añadimos en cada una como Associated IP, la de nuestro servidor y como Domain:
+* cockpit.omp.home
+* nextcloud.omp.home
+* qbittorrent.omp.home
+* jellyfin.omp.home
+* prowlarr.omp.home
+* jackett.omp.home
+* radarr.omp.home
+* sonarr.omp.home
+* bazarr.omp.home
+* pihole.omp.home

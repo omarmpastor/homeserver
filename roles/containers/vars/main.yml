@@ -69,10 +69,6 @@ services:
       group: "{{ PGID }}"
       directories:
         - "{{ storage_path }}/media/tvshows"
-  - name: pihole
-    version: "latest"
-    port: 80
-    password: "{{ apps_password | default('admin123') }}"
 
 
 # Servicios configurados, solo descomentar para usar
@@ -84,3 +80,8 @@ services:
   # - name: dockhand
   #   version: "latest"
   #   port: 3000
+
+  # - name: pihole
+  #   version: "latest"
+  #   port: 80
+  #   password: "{{ apps_password | default('admin123') }}"
