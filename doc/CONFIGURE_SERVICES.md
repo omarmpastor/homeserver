@@ -254,7 +254,7 @@ Vamos a http://dockhand.omp.home
   * Añadimos un usuario
   * Hay un botón de Authentication > Lo activamos y se pone en on
 
-## Pihole
+### Pihole
 
 Configuramos Pihole como DNS primario en nuestro router y lo configuramos http://IP:8084/admin/login:
 
@@ -271,3 +271,16 @@ Vamos a Settings -> Local DNS Records y en List of local DNS records añadimos e
 * sonarr.omp.home
 * bazarr.omp.home
 * pihole.omp.home
+
+### Mealie (recetas)
+
+Vamos a http://mealie.omp.home o http://IP:9925
+
+Hacemos login con el usuario/contraseña por defecto: changeme@example.com y MyPassword
+* Seleccionamos idioma
+* Creamos un usuario utilizando el mismo usaurio y contraseña que tenemos en `vault.yml/apps_password`
+* Ajustes comunes:
+  * Marcamos: Habilitar acceso publico
+  * Desmarcamos Utilizar datos de ejemplo
+* Provedores de IA: Nada
+

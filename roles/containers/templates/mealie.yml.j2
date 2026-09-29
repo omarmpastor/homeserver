@@ -1,0 +1,35 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:{{ item.version }}
+    container_name: mealie
+    ports:
+        - "9925:{{ item.port }}"
+    deploy:
+      resources:
+        limits:
+          memory: 1000M # 
+    volumes:
+      - mealie_data:/app/data/
+    environment:
+      ALLOW_SIGNUP: "false"
+      PUID: {{ PUID }}
+      PGID: {{ PGID }}
+      TZ: {{ timezone }}
+      BASE_URL: http://{{ item.name }}.{{ homeserver_domain }}:{{ item.port }}
+      DB_ENGINE: sqlite
+    restart: unless-stopped
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  mealie_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true
+
+

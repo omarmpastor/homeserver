@@ -85,3 +85,7 @@ services:
   #   version: "latest"
   #   port: 80
   #   password: "{{ apps_password | default('admin123') }}"
+
+  # - name: mealie
+  #   version: "v3.28.0"
+  #   port: 9000
