@@ -18,6 +18,10 @@ services:
     networks:
       - {{ traefik_network_name }}
     restart: unless-stopped
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
 
 volumes:
   qbittorrent_data:
