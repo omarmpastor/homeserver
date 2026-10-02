@@ -1,0 +1,50 @@
+---
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Install NetworkManager
+  ansible.builtin.apt:
+    name: network-manager
+    state: present
+    update_cache: true
+
+- name: Configure NetworkManager
+  ansible.builtin.template:
+    src: NetworkManager.conf.j2
+    dest: /etc/NetworkManager/NetworkManager.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create NetworkManager connection
+  ansible.builtin.template:
+    src: connection.nmconnection.j2
+    dest: "/etc/NetworkManager/system-connections/ansible-{{ network.interface }}.nmconnection"
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Disable networking.service on next boot
+  ansible.builtin.systemd:
+    name: networking
+    enabled: false
+  when: "'ifupdown' in ansible_facts.packages"
+
+- name: Disable systemd-networkd on next boot
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    enabled: false
+  when: ansible_facts.services['systemd-networkd.service'] is defined
+
+- name: Disable systemd-networkd-wait-online on next boot
+  ansible.builtin.systemd:
+    name: systemd-networkd-wait-online
+    enabled: false
+  when: ansible_facts.services['systemd-networkd-wait-online.service'] is defined
+
+- name: Enable NetworkManager for next boot
+  ansible.builtin.systemd:
+    name: NetworkManager
+    enabled: true
+    state: stopped

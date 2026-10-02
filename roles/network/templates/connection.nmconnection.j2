@@ -1,0 +1,15 @@
+[connection]
+id=ansible-{{ network.interface }}
+type=ethernet
+interface-name={{ network.interface }}
+autoconnect=true
+
+[ethernet]
+
+[ipv4]
+method=manual
+address1={{ network.address }}/{{ network.prefix }},{{ network.gateway }}
+dns={{ network.dns | join(';') }};
+
+[ipv6]
+method=disabled
