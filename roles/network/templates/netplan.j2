@@ -1,12 +1,17 @@
 # Managed by Ansible
 # Do not edit manually
-
+#
+# El nombre 99- es intencionado: netplan fusiona todos los .yaml en orden
+# alfabetico y el ultimo gana, asi que este arquivo prevalece sobre el que
+# genera el instalador de Ubuntu.
 network:
   version: 2
   renderer: networkd
 
   ethernets:
-    {{ network_interface | default(ansible_default_ipv4.interface) }}:
+    {{ network_interface }}:
+      dhcp4: false
+      dhcp6: false
       addresses:
         - "{{ network.address }}/{{ network.prefix }}"
 

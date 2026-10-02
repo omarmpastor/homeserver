@@ -9,6 +9,11 @@
     state: present
     update_cache: true
 
+# Se recogen despues de instalar NetworkManager: en un Debian limpio todavia
+# no existe el servicio y las comprobaciones de abajo se lo saltarian.
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
 - name: Configure NetworkManager
   ansible.builtin.template:
     src: NetworkManager.conf.j2
@@ -20,31 +25,54 @@
 - name: Create NetworkManager connection
   ansible.builtin.template:
     src: connection.nmconnection.j2
-    dest: "/etc/NetworkManager/system-connections/ansible-{{ network.interface }}.nmconnection"
+    dest: "/etc/NetworkManager/system-connections/ansible-{{ network_interface }}.nmconnection"
     owner: root
     group: root
     mode: '0600'
+    backup: true
+  register: nmconnection
 
-- name: Disable networking.service on next boot
-  ansible.builtin.systemd:
-    name: networking
-    enabled: false
-  when: "'ifupdown' in ansible_facts.packages"
+- name: Validate the NetworkManager connection profile
+  ansible.builtin.command:
+    cmd: "nmcli connection load /etc/NetworkManager/system-connections/ansible-{{ network_interface }}.nmconnection"
+  changed_when: false
+  when: nmconnection is changed
 
-- name: Disable systemd-networkd on next boot
-  ansible.builtin.systemd:
-    name: systemd-networkd
-    enabled: false
-  when: ansible_facts.services['systemd-networkd.service'] is defined
+- name: Comprobar si NetworkManager gestiona la interfaz ahora mismo
+  ansible.builtin.command:
+    cmd: "nmcli -t -f GENERAL.STATE device show {{ network_interface }}"
+  register: nm_device_state
+  changed_when: false
+  failed_when: false
 
-- name: Disable systemd-networkd-wait-online on next boot
-  ansible.builtin.systemd:
-    name: systemd-networkd-wait-online
-    enabled: false
-  when: ansible_facts.services['systemd-networkd-wait-online.service'] is defined
+- name: Guardar si NetworkManager gestiona la interfaz ahora mismo
+  ansible.builtin.set_fact:
+    nm_manages_interface: "{{ '100' in (nm_device_state.stdout | default('')) }}"
 
-- name: Enable NetworkManager for next boot
-  ansible.builtin.systemd:
+- name: Habilitar NetworkManager para el proximo reinicio
+  # Si NetworkManager ya gestiona la interfaz se deja en marcha (el perfil nuevo
+  # tiene autoconnect-priority negativa, asi que no le gana el conflicto). Si no,
+  # se para para que no aplique la IP nueva en caliente y corte la sesion SSH:
+  # la configuracion se aplica al arrancar.
+  ansible.builtin.service:
     name: NetworkManager
     enabled: true
-    state: stopped
+    state: "{{ 'started' if nm_manages_interface | bool else 'stopped' }}"
+
+- name: Disable networking.service on next boot
+  ansible.builtin.service:
+    name: networking
+    enabled: false
+  when: "'ifupdown' in ansible_facts['packages']"
+
+- name: Disable systemd-networkd on next boot
+  ansible.builtin.service:
+    name: systemd-networkd
+    enabled: false
+  when: "'systemd-networkd.service' in ansible_facts['services']"
+
+- name: Disable systemd-networkd-wait-online on next boot
+  ansible.builtin.service:
+    name: systemd-networkd-wait-online
+    enabled: false
+  when: "'systemd-networkd-wait-online.service' in ansible_facts['services']"

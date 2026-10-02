@@ -14,23 +14,8 @@
   community.general.timezone:
     name: "{{ timezone }}"
 
-# - name: Configure network on Debian
-#   ansible.builtin.template:
-#     src: interfaces.j2
-#     dest: /etc/network/interfaces
-#     owner: root
-#     group: root
-#     mode: '0644'
-#   when: ansible_facts['distribution'] == 'Debian'
-
-# - name: Configure network on Ubuntu
-#   ansible.builtin.template:
-#     src: netplan.j2
-#     dest: /etc/netplan/01-network.yaml
-#     owner: root
-#     group: root
-#     mode: '0600'
-#   when: ansible_facts['distribution'] == 'Ubuntu'
+# La configuracion de red vive en el rol network (NetworkManager en Debian,
+# netplan en Ubuntu).
 
 - name: Grant power management to user
   ansible.builtin.copy:

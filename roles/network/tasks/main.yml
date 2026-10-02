@@ -1,8 +1,54 @@
 ---
+- name: Comprobar que la distribucion esta soportada
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['distribution'] in network_supported_distributions
+    fail_msg: >-
+      Distribucion '{{ ansible_facts['distribution'] }}' no soportada por el rol network.
+      Distribuciones soportadas: {{ network_supported_distributions | join(', ') }}.
+    quiet: true
+
+- name: Comprobar las variables de red
+  ansible.builtin.assert:
+    that:
+      - network.address is defined and network.address | length > 0
+      - network.prefix is defined
+      - network.gateway is defined
+    fail_msg: >-
+      Faltan variables de red en group_vars/all.yml
+      (network.address, network.prefix, network.gateway).
+    quiet: true
+
+- name: Determinar la interfaz de red a configurar
+  ansible.builtin.set_fact:
+    network_interface: >-
+      {{ network.interface | default('', true)
+         | default(ansible_facts['default_ipv4']['interface'] | default('', true), true) }}
+
+- name: Comprobar la interfaz de red
+  ansible.builtin.assert:
+    that:
+      - network_interface | length > 0
+      - >-
+        ansible_facts['interfaces'] is not defined
+        or network_interface in ansible_facts['interfaces']
+    fail_msg: >-
+      No se ha podido determinar una interfaz de red valida ('{{ network_interface }}').
+      Define 'network.interface' en group_vars/all.yml.
+    quiet: true
+
 - name: Configuración específica de Debian
   ansible.builtin.include_tasks: debian.yml
-  when: ansible_facts.distribution == "Debian"
+  when: ansible_facts['distribution'] == 'Debian'
 
 - name: Configuración específica de Ubuntu
   ansible.builtin.include_tasks: ubuntu.yml
-  when: ansible_facts.distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: Avisar de que la configuracion se aplica en el proximo reinicio
+  ansible.builtin.debug:
+    msg: >-
+      Red configurada en {{ network_interface }}
+      ({{ network.address }}/{{ network.prefix }}, gateway {{ network.gateway }}).
+      Reinicia el servidor para aplicarla:
+      ssh USUARIO@{{ network.address }} 'sudo reboot'

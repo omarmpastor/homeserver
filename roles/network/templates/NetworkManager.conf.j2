@@ -1,5 +1,11 @@
+# Managed by Ansible
+# Do not edit manually
+#
+# Solo el plugin keyfile: con ifupdown en modo managed, NetworkManager adoptaria
+# ademas las interfaces declaradas en /etc/network/interfaces y entraria en
+# conflicto con el perfil estatico que crea este rol.
 [main]
-plugins=keyfile,ifupdown
+plugins=keyfile
 
 [ifupdown]
-managed=true
+managed=false

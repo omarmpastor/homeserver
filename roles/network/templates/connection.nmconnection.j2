@@ -1,8 +1,14 @@
+# Managed by Ansible
+# Do not edit manually
 [connection]
-id=ansible-{{ network.interface }}
+id=ansible-{{ network_interface }}
 type=ethernet
-interface-name={{ network.interface }}
+interface-name={{ network_interface }}
 autoconnect=true
+# Negativa a proposito: si NetworkManager ya esta en marcha gestionando esta
+# interfaz, no debe cambiar la IP en caliente. En el proximo arranque, al ser
+# el unico perfil disponible, si se aplica.
+autoconnect-priority=-10
 
 [ethernet]
 
@@ -13,3 +19,5 @@ dns={{ network.dns | join(';') }};
 
 [ipv6]
 method=disabled
+
+[proxy]

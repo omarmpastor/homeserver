@@ -1,0 +1,4 @@
+---
+network_supported_distributions:
+  - Debian
+  - Ubuntu
