@@ -1,0 +1,8 @@
+- name: Configure network on Ubuntu
+  ansible.builtin.template:
+    src: netplan.j2
+    dest: /etc/netplan/01-network.yaml
+    owner: root
+    group: root
+    mode: '0600'
+  when: ansible_facts['distribution'] == 'Ubuntu'
