@@ -1,14 +1,6 @@
 all:
   children:
 
-    debian:
-      hosts:
-        192.168.1.181:
-          ansible_user: sysroot
-
-    ubuntu:
-      hosts: {}
-
     homeserver:
       hosts:
         192.168.1.181:
