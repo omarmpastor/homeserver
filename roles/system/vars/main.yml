@@ -1,0 +1,9 @@
+packages:
+  - curl
+  - vim
+  - git
+  - unrar-free
+  - htop
+  - cockpit
+  - udisks2-lvm2
+  - udisks2-btrfs

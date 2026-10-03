@@ -5,16 +5,6 @@ timezone: Europe/Madrid
 PUID: 1000
 PGID: 1000
 
-packages:
-  - curl
-  - vim
-  - git
-  - unrar-free
-  - htop
-  - cockpit
-  - udisks2-lvm2
-  - udisks2-btrfs
-
 network:
   # Interfaz a configurar. Si se deja vacia se autodetecta usando la ruta por
   # defecto del servidor (ansible_facts.default_ipv4.interface).

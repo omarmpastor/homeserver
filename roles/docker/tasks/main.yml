@@ -1,5 +1,5 @@
 ---
-- name: Install dependencies for Docker
+- name: Install Docker dependencies
   ansible.builtin.apt:
     name:
       - ca-certificates
@@ -7,29 +7,16 @@
       - python3-debian
       - python3-requests
       - python3-docker
-
     state: present
     update_cache: true
 
-- name: Add Docker repository
-  ansible.builtin.deb822_repository:
-    name: docker
-    types:
-      - deb
-    uris:
-      - https://download.docker.com/linux/debian
-    suites:
-      - "{{ ansible_facts['distribution_release'] }}"
-    components:
-      - stable
-    architectures:
-      - amd64
-    signed_by: https://download.docker.com/linux/debian/gpg
-    state: present
+- name: Configure Docker repository on Debian
+  ansible.builtin.include_tasks: debian.yml
+  when: ansible_facts['distribution'] == 'Debian'
 
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: true
+- name: Configure Docker repository on Ubuntu
+  ansible.builtin.include_tasks: ubuntu.yml
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install Docker Engine
   ansible.builtin.apt:
