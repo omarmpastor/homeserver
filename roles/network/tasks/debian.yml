@@ -1,16 +1,10 @@
 ---
-- name: Gather package facts
-  ansible.builtin.package_facts:
-    manager: auto
-
 - name: Install NetworkManager
   ansible.builtin.apt:
     name: network-manager
     state: present
     update_cache: true
 
-# Se recogen despues de instalar NetworkManager: en un Debian limpio todavia
-# no existe el servicio y las comprobaciones de abajo se lo saltarian.
 - name: Gather service facts
   ansible.builtin.service_facts:
 
@@ -49,11 +43,7 @@
   ansible.builtin.set_fact:
     nm_manages_interface: "{{ '100' in (nm_device_state.stdout | default('')) }}"
 
-- name: Habilitar NetworkManager para el proximo reinicio
-  # Si NetworkManager ya gestiona la interfaz se deja en marcha (el perfil nuevo
-  # tiene autoconnect-priority negativa, asi que no le gana el conflicto). Si no,
-  # se para para que no aplique la IP nueva en caliente y corte la sesion SSH:
-  # la configuracion se aplica al arrancar.
+- name: Habilitar NetworkManager para el próximo reinicio
   ansible.builtin.service:
     name: NetworkManager
     enabled: true
@@ -63,7 +53,7 @@
   ansible.builtin.service:
     name: networking
     enabled: false
-  when: "'ifupdown' in ansible_facts['packages']"
+  when: "'networking.service' in ansible_facts['services']"
 
 - name: Disable systemd-networkd on next boot
   ansible.builtin.service:
