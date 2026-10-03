@@ -15,14 +15,13 @@ packages:
   - udisks2-lvm2
   - udisks2-btrfs
 
-# Network
 network:
   # Interfaz a configurar. Si se deja vacia se autodetecta usando la ruta por
   # defecto del servidor (ansible_facts.default_ipv4.interface).
   interface: ""
-  address: 192.168.1.100
+  address: 192.168.122.100
   prefix: 24
-  gateway: 192.168.1.1
+  gateway: 192.168.122.1
   dns:
     - 9.9.9.9
     - 149.112.112.112

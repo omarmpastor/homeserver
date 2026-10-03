@@ -4,9 +4,7 @@
   vars_files:
     - vault.yml
   roles:
+    - network
     - system
     - docker
     - containers
-    # Va el ultimo: deja NetworkManager listo para el proximo reinicio y asi
-    # ningun rol posterior puede volver a habilitar ifupdown o networkd.
-    - network

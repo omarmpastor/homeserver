@@ -3,20 +3,6 @@
   ansible.builtin.package_facts:
     manager: auto
 
-- name: Desactivar NetworkManager en el proximo reinicio (netplan usa networkd)
-  # Solo se desactiva: pararlo ahora quitaria la IP actual del servidor y
-  # cortaria la sesion SSH. Netplan se aplica al arrancar.
-  ansible.builtin.service:
-    name: NetworkManager
-    enabled: false
-  when: "'network-manager' in ansible_facts['packages']"
-
-- name: Desactivar ifupdown en el proximo reinicio
-  ansible.builtin.service:
-    name: networking
-    enabled: false
-  when: "'ifupdown' in ansible_facts['packages']"
-
 - name: Configure network on Ubuntu
   ansible.builtin.template:
     src: netplan.j2
