@@ -1,0 +1,19 @@
+services:
+  ollama:
+    image: ollama/ollama:{{ item.version }}
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:{{ item.port }}"
+    volumes:
+      - ollama_data:/root/.ollama
+	#gpus: all
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  ollama_data:
