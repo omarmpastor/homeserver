@@ -101,7 +101,9 @@ La primera vez que nos conectemos nos pedira que establezcamos un login:
 * Authentication Required: Disabled for Local Addresses
 * Username: [username]
 * Password: [password]
-* Allowed Hosts: radarr/sonarr segun corresponda (es para llamadas a la api desde prowlarr)
+* Allowed Hosts:
+  * En radarr: radarr,radarr.omp.home,[IP]
+  * En sonarr: sonarr,sonarr.omp.home,[IP]
 
 Vamos a Settings -> Media Management -> Pinchamos en el icono de arriba "Show Advanced"
 - Dejamos marcado -> Use Hardlinks instead of Copy
@@ -141,7 +143,7 @@ La primera vez que nos conectemos nos pedira que establezcamos un login:
 * Authentication Required: Disabled for Local Addresses
 * Username: [username] (consejo: ponemos el usuario/password del archivo `vault.yml`)
 * Password: [password]
-* Allowed Hosts: prowlarr
+* Allowed Hosts: prowlarr,prowlarr.omp.home,[IP]
 
 Vamos a Settings -> Apps -> Añadimos Radarr
 Prowlarr Server: http://prowlarr:9696
@@ -284,3 +286,6 @@ Hacemos login con el usuario/contraseña por defecto: changeme@example.com y MyP
   * Desmarcamos Utilizar datos de ejemplo
 * Provedores de IA: Nada
 
+### OpenClaw
+
+[https://github.com/omarmpastor/homeserver/blob/main/doc/OPENCLAW.md](https://github.com/omarmpastor/homeserver/blob/main/doc/OPENCLAW.md)

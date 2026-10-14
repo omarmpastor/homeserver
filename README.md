@@ -18,7 +18,7 @@ Clonamos el repositorio `git clone https://github.com/omarmpastor/homeserver.git
 * Revisamos la configuracion de red en `group_vars/all.yml` (`network.interface` se autodetecta si se deja vacia)
 * Editamos el archivo de secretos en `vault.yml`
 * Editamos las variables en `group_vars/all.yml`
-* Revisamos los servicios que queremos usar y los que no los comentamos en `roles/containers/vars/main.yml`
+* Revisamos los servicios que queremos usar y los establecemos como activos/inactivos en `roles/containers/vars/main.yml`
 * Si queremos cifrar los secretos, ejecutamos `ansible-vault encrypt vault.yml`
 
 > En este punto deberiamos revisar el directorio donde se van a guardar los datos `group_vars/all.yml/storage_path`

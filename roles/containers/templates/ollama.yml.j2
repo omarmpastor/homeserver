@@ -17,3 +17,7 @@ services:
 
 volumes:
   ollama_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true

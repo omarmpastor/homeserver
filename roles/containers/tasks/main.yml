@@ -48,3 +48,4 @@
     project_src: "{{ docker_containers_dir }}/{{ item.name }}"
     state: present
   loop: "{{ services }}"
+  when: item.enabled | default(true) | bool

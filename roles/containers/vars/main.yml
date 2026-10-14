@@ -12,12 +12,15 @@ traefik_labels:
 services:
   - name: traefik
     version: "v3.6"
+    enabled: true
   - name: heimdall
     version: "latest"
     port: 80
+    enabled: true
   - name: gitea
     version: "1.25.5"
     port: 3000
+    enabled: true
   - name: nextcloud
     version: "stable-apache"
     port: 80
@@ -26,6 +29,7 @@ services:
       group: 33
       directories:
         - "{{ storage_path }}/nextcloud_data"
+    enabled: true
   - name: jellyfin
     version: "latest"
     port: 8096
@@ -36,6 +40,7 @@ services:
         - "{{ storage_path }}/media/movies"
         - "{{ storage_path }}/media/tvshows"
         - "{{ storage_path }}/media/videos"
+    enabled: true
   - name: qbittorrent
     version: "latest"
     port: 8090
@@ -44,15 +49,19 @@ services:
       group: "{{ PGID }}"
       directories:
         - "{{ storage_path }}/torrents"
+    enabled: true
   - name: bazarr
     version: "latest"
     port: 6767
+    enabled: true
   - name: jackett
     version: "latest"
     port: 9117
+    enabled: true
   - name: prowlarr
     version: "latest"
     port: 9696
+    enabled: true
   - name: radarr
     version: "latest"
     port: 7878
@@ -61,6 +70,7 @@ services:
       group: "{{ PGID }}"
       directories:
         - "{{ storage_path }}/media/movies"
+    enabled: true
   - name: sonarr
     version: "latest"
     port: 8989
@@ -69,27 +79,32 @@ services:
       group: "{{ PGID }}"
       directories:
         - "{{ storage_path }}/media/tvshows"
+    enabled: true
 
+# Servicios no habilitados, establecer enabled: true para activar
 
-# Servicios configurados, solo descomentar para usar
+  - name: metube
+    version: "latest"
+    port: 8081
+    enabled: false     
 
-  # - name: metube
-  #   version: "latest"
-  #   port: 8081
+  - name: dockhand
+    version: "latest"
+    port: 3000
+    enabled: false
 
-  # - name: dockhand
-  #   version: "latest"
-  #   port: 3000
+  - name: pihole
+    version: "latest"
+    port: 80
+    password: "{{ apps_password | default('admin123') }}"
+    enabled: false
 
-  # - name: pihole
-  #   version: "latest"
-  #   port: 80
-  #   password: "{{ apps_password | default('admin123') }}"
+  - name: mealie
+    version: "v3.28.0"
+    port: 9000
+    enabled: false
 
-  # - name: mealie
-  #   version: "v3.28.0"
-  #   port: 9000
-
-  # - name: ollama
-  #   version: "latest"
-  #   port: 11434
+  - name: ollama
+    version: "latest"
+    port: 11434
+    enabled: false
