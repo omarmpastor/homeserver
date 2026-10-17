@@ -1,0 +1,35 @@
+services:
+  hermes:
+    image: nousresearch/hermes-agent:{{ item.version }}
+    container_name: hermes
+    restart: unless-stopped
+    ports:
+      - "9119:{{ item.port }}"
+    # - "8642:8642"
+
+    command: gateway run
+
+    volumes:
+      - hermes_data:/opt/data
+
+    shm_size: 1g
+    
+    environment:
+      - HERMES_DASHBOARD=1
+      - HERMES_DASHBOARD_HOST=0.0.0.0
+      - HERMES_DASHBOARD_PORT=9119
+      - HERMES_DASHBOARD_BASIC_AUTH_USERNAME=admin
+      - HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=Mipasslargo.26
+    networks:
+      - {{ traefik_network_name }}
+    labels:
+{% for label in traefik_labels %}
+      - "{{ label }}"
+{% endfor %}
+
+volumes:
+  hermes_data:
+
+networks:
+  {{ traefik_network_name }}:
+    external: true
