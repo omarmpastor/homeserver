@@ -113,3 +113,8 @@ services:
     version: "latest"
     port: 9119
     enabled: false
+    # storage_local:
+    #   owner: 1000
+    #   group: 1000
+    #   directories:
+    #     - "{{ storage_path }}/hermes_data"

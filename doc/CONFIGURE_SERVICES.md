@@ -286,6 +286,3 @@ Hacemos login con el usuario/contraseña por defecto: changeme@example.com y MyP
   * Desmarcamos Utilizar datos de ejemplo
 * Provedores de IA: Nada
 
-### OpenClaw
-
-[https://github.com/omarmpastor/homeserver/blob/main/doc/OPENCLAW.md](https://github.com/omarmpastor/homeserver/blob/main/doc/OPENCLAW.md)
