@@ -30,6 +30,7 @@ services:
     restart: always
     healthcheck:
       disable: false
+    labels:
 {% for label in traefik_labels %}
       - "{{ label }}"
 {% endfor %}
@@ -77,3 +78,4 @@ services:
 
 volumes:
   model-cache:
+  immichdb_data:
