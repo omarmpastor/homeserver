@@ -104,6 +104,16 @@ services:
     port: 9000
     enabled: false
 
+  - name: immich
+    version: "v3"
+    port: 2283
+    enabled: false
+    storage_local:
+      owner: "{{ PUID }}"
+      group: "{{ PGID }}"
+      directories:
+        - "{{ storage_path }}/immich_data"
+
   - name: ollama
     version: "latest"
     port: 11434
