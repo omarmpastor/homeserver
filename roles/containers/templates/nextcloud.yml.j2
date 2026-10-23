@@ -1,29 +1,77 @@
 services:
-  nextcloud:
-    image: docker.io/library/nextcloud:{{ item.version }}
+  db:
+    image: docker.io/library/postgres:17-alpine3.23
+    environment:
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: nextcloud
+      POSTGRES_PASSWORD: nextcloud
+    volumes:
+      - nextclouddb_data:/var/lib/postgresql/data"
+    networks:
+      - internal_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nextcloud"]
+      interval: 5s
+      retries: 20
     restart: unless-stopped
+
+  redis:
+    image: docker.io/library/redis:8.6-alpine
+    command: redis-server --requirepass redis-falsa-de-laboratorio
+    networks:
+      - internal_network
+    restart: unless-stopped
+
+  app:
+    image: docker.io/library/nextcloud:{{ item.version }}
     ports:
-      - "8083:{{ item.port }}"
+      - "8080:{{ item.port }}"
     volumes:
       - nextcloud_config:/var/www/html/config
       - nextcloud_custom_apps:/var/www/html/custom_apps
       - {{ storage_path }}/nextcloud_data:/var/www/html/data:Z
     environment:
-      - SQLITE_DATABASE=dbnextcloud
-      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
-      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
-      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_TRUSTED_DOMAINS}
+      POSTGRES_HOST: db
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: nextcloud
+      POSTGRES_PASSWORD: nextcloud
+      PHP_MEMORY_LIMIT: 1G
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: ${NEXTCLOUD_TRUSTED_DOMAINS}
     networks:
+      - internal_network
       - {{ traefik_network_name }}
     labels:
 {% for label in traefik_labels %}
       - "{{ label }}"
 {% endfor %}
+    depends_on:
+      db: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost/status.php || exit 1"]
+      interval: 10s
+      retries: 30
+    restart: unless-stopped
 
-volumes:
-  nextcloud_config:
-  nextcloud_custom_apps:
+  cron:
+    image: docker.io/library/nextcloud:{{ item.version }}
+    entrypoint: /cron.sh
+    volumes:
+      - nextcloud_config:/var/www/html/config
+    networks:
+      - internal_network
+    depends_on:
+      app: { condition: service_healthy }   # "arrancado" NO es "listo"
+    restart: unless-stopped
 
 networks:
   {{ traefik_network_name }}:
     external: true
+  internal_network:
+    internal: true 
+
+volumes:
+  nextclouddb_data:
+  nextcloud_config:
+  nextcloud_custom_apps:

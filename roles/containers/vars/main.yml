@@ -22,7 +22,7 @@ services:
     port: 3000
     enabled: true
   - name: nextcloud
-    version: "stable-apache"
+    version: "35-apache"
     port: 80
     storage_local:
       owner: 33
