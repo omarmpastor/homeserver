@@ -14,6 +14,14 @@ services:
       - {{ storage_path }}/media/movies:/data/movies:Z
       - {{ storage_path }}/media/tvshows:/data/tvshows:Z
       - {{ storage_path }}/media/videos:/data/videos:Z
+      
+    devices:
+      - /dev/dri:/dev/dri
+
+    group_add:
+      - "render"
+      - "video"
+
     restart: unless-stopped
     networks:
       - {{ traefik_network_name }}
