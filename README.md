@@ -20,6 +20,7 @@ Clonamos el repositorio `git clone https://github.com/omarmpastor/homeserver.git
 * Editamos las variables en `group_vars/all.yml`
 * Revisamos los servicios que queremos usar y los establecemos como activos/inactivos en `roles/containers/vars/main.yml`
 * Si queremos cifrar los secretos, ejecutamos `ansible-vault encrypt vault.yml`
+* Si vamos a administrar VMs desde cockpit, descomentamos la linea roles/system/vars/main.yml/packages/cockpit-machines
 
 > En este punto deberiamos revisar el directorio donde se van a guardar los datos `group_vars/all.yml/storage_path`
 
