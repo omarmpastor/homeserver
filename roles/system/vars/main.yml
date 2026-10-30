@@ -7,4 +7,4 @@ packages:
   - cockpit
   - udisks2-lvm2
   - udisks2-btrfs
-  - cockpit-machines
+#  - cockpit-machines
