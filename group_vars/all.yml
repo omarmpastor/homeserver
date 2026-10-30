@@ -1,5 +1,5 @@
 storage_path: /storage
-docker_containers_dir: /opt/docker_stacks
+docker_containers_dir: /opt/docker
 
 timezone: Europe/Madrid
 PUID: 1000
