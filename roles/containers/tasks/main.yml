@@ -43,6 +43,15 @@
     name: "{{ item }}"
   loop: "{{ networks }}"
 
+- name: Pull container images for enabled services
+  community.docker.docker_compose_v2_pull:
+    project_src: "{{ docker_containers_dir }}/{{ item.name }}"
+    policy: missing
+  loop: "{{ services }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.enabled | default(true) | bool
+
 - name: Start containers
   community.docker.docker_compose_v2:
     project_src: "{{ docker_containers_dir }}/{{ item.name }}"
