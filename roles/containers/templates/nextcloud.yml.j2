@@ -25,7 +25,7 @@ services:
   app:
     image: docker.io/library/nextcloud:{{ item.version }}
     ports:
-      - "8080:{{ item.port }}"
+      - "8081:{{ item.port }}"
     volumes:
       - nextcloud_config:/var/www/html/config
       - nextcloud_custom_apps:/var/www/html/custom_apps

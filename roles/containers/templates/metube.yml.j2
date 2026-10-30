@@ -4,7 +4,7 @@ services:
     container_name: metube
     restart: unless-stopped
     ports:
-      - "8081:{{ item.port }}"
+      - "8082:{{ item.port }}"
     volumes:
       - {{ storage_path }}/downloads:/downloads:Z
     networks:

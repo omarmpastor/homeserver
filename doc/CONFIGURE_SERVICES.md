@@ -24,7 +24,7 @@ Añadimos las apps:
 
 Añadimos las apps:
 * https://IP:9090
-* http://IP:8083 (nextcloud)
+* http://IP:8081 (nextcloud)
 * http://IP:8090 (qbittorrent)
 * http://IP:8096 (jellyfin)
 * http://IP:9696 (prowlarr)
@@ -36,7 +36,7 @@ Añadimos las apps:
 
 ## Nextcloud
 
-Entramos en http://nextcloud.omp.home o http://IP:8083 con el usuario/contraseña que tenemos definida en el archivo `vault.yml/apps_password`
+Entramos en http://nextcloud.omp.home o http://IP:8081 con el usuario/contraseña que tenemos definida en el archivo `vault.yml/apps_password`
 
 * Vamos al icono del perfil de usuario > Accounts (http://nextcloud.omp.home/settings/user) -> Podemos configurar el usuario
 * Vamos al icono del perfil de usuario > Accounts/Cuentas (http://nextcloud.omp.home/settings/users) -> Botón "+ New Account" para dar de alta otros usuarios
