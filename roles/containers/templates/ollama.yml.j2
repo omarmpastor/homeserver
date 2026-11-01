@@ -1,6 +1,6 @@
 services:
   ollama:
-    image: ollama/ollama:{{ item.version }}
+    image: docker.io/library/ollama/ollama:{{ item.version }}
     container_name: ollama
     restart: unless-stopped
     ports:
