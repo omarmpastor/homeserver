@@ -89,12 +89,12 @@ services:
     enabled: false     
 
   - name: dockhand
-    version: "latest"
+    version: "v1.0.56"
     port: 3000
     enabled: false
 
   - name: pihole
-    version: "latest"
+    version: "2026.10.1"
     port: 80
     password: "{{ apps_password | default('admin123') }}"
     enabled: false
@@ -115,12 +115,12 @@ services:
         - "{{ storage_path }}/immich_data"
 
   - name: ollama
-    version: "latest"
+    version: "0.40.13"
     port: 11434
     enabled: false
 
   - name: hermes
-    version: "latest"
+    version: "v0.22.5"
     port: 9119
     enabled: false
     # storage_local:

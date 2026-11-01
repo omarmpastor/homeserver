@@ -1,6 +1,6 @@
 services:
   dockhand:
-    image: fnsys/dockhand:{{ item.version }}
+    image: docker.io/library/fnsys/dockhand:{{ item.version }}
     container_name: dockhand
     restart: unless-stopped
     ports:
