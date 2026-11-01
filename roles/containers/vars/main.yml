@@ -21,6 +21,11 @@ services:
     version: "28.2.0"
     port: 3000
     enabled: true
+    storage_local:
+      owner: "{{ PUID }}"
+      group: "{{ PUID }}"
+      directories:
+        - "{{ storage_path }}/gitea_data"
   - name: nextcloud
     version: "35-apache"
     port: 80
