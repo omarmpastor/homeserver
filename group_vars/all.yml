@@ -18,4 +18,4 @@ network:
 #    - 149.112.112.112
 
 homeserver_name: homeserver
-homeserver_domain: omp.home
+homeserver_domain: home.arpa

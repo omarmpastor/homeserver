@@ -16,11 +16,9 @@ services:
       - {{ storage_path }}/media/videos:/data/videos:Z
       
     devices:
-      - /dev/dri:/dev/dri
-
+      - /dev/dri/renderD128:/dev/dri/renderD128
     group_add:
       - "992"
-      - "44"
 
     restart: unless-stopped
     networks:
