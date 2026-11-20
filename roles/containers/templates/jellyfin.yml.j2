@@ -1,26 +1,27 @@
 services:
   jellyfin:
     container_name: jellyfin
-    image: lscr.io/linuxserver/jellyfin:{{ item.version }}
+    image: ghcr.io/hotio/jellyfin:{{ item.version }}
     ports:
       - "8096:{{ item.port }}"
     environment:
-      - PUID={{ PUID }}
-      - PGID={{ PGID }}
-      - TZ={{ timezone }}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=022
+      - WEBUI_PORTS=8096/tcp 
     volumes:
       - jellyfin_data:/config
       - jellyfin_cache:/config/cache
       - {{ storage_path }}/media/movies:/data/movies:Z
       - {{ storage_path }}/media/tvshows:/data/tvshows:Z
       - {{ storage_path }}/media/videos:/data/videos:Z
-      
+
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
     group_add:
       - "992"
 
-    restart: unless-stopped
     networks:
       - {{ traefik_network_name }}
     labels:
@@ -31,7 +32,3 @@ services:
 volumes:
   jellyfin_data:
   jellyfin_cache:
-
-networks:
-  {{ traefik_network_name }}:
-    external: true

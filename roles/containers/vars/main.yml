@@ -35,101 +35,18 @@ services:
       directories:
         - "{{ storage_path }}/nextcloud_data"
     enabled: true
-  - name: jellyfin
-    version: "amd64-version-12.4ubu2604"
-    port: 8096
+  - name: arr-stack
+    version: "latest"
+    port: 80
     storage_local:
       owner: "{{ PUID }}"
       group: "{{ PGID }}"
       directories:
         - "{{ storage_path }}/media/movies"
         - "{{ storage_path }}/media/tvshows"
-        - "{{ storage_path }}/media/videos"
-    enabled: true
-  - name: qbittorrent
-    version: "amd64-5.3.0"
-    port: 8090
-    storage_local:
-      owner: "{{ PUID }}"
-      group: "{{ PGID }}"
-      directories:
         - "{{ storage_path }}/torrents"
     enabled: true
-  - name: bazarr
-    version: "amd64-1.6.2"
-    port: 6767
-    enabled: true
-  - name: jackett
-    version: "amd64-0.24.2985"
-    port: 9117
-    enabled: true
-  - name: prowlarr
-    version: "amd64-2.7.0"
-    port: 9696
-    enabled: true
-  - name: radarr
-    version: "amd64-6.4.4"
-    port: 7878
-    storage_local:
-      owner: "{{ PUID }}"
-      group: "{{ PGID }}"
-      directories:
-        - "{{ storage_path }}/media/movies"
-    enabled: true
-  - name: sonarr
-    version: "amd64-4.0.20"
-    port: 8989
-    storage_local:
-      owner: "{{ PUID }}"
-      group: "{{ PGID }}"
-      directories:
-        - "{{ storage_path }}/media/tvshows"
-    enabled: true
-
-# Servicios no habilitados, establecer enabled: true para activar
-
-  - name: metube
-    version: "latest"
-    port: 8081
-    enabled: false     
-
   - name: dockhand
     version: "v1.0.56"
     port: 3000
-    enabled: false
-
-  - name: pihole
-    version: "2026.10.1"
-    port: 80
-    password: "{{ apps_password | default('admin123') }}"
-    enabled: false
-
-  - name: mealie
-    version: "v3.28.0"
-    port: 9000
-    enabled: false
-
-  - name: immich
-    version: "v3"
-    port: 2283
-    enabled: false
-    storage_local:
-      owner: "{{ PUID }}"
-      group: "{{ PGID }}"
-      directories:
-        - "{{ storage_path }}/immich_data"
-
-  - name: ollama
-    version: "0.40.13"
-    port: 11434
-    enabled: false
-
-  - name: hermes
-    version: "v0.22.5"
-    port: 9119
-    enabled: false
-    # storage_local:
-    #   owner: 1000
-    #   group: 1000
-    #   directories:
-    #     - "{{ storage_path }}/hermes_data"
+    enabled: true
