@@ -35,7 +35,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - radarr_data:/config
-      - ${DOCKERSTORAGEDIR}/media/movies:/data
+      - {{ storage_path }}/media/movies:/data
     networks:
       - {{ traefik_network_name }}
     labels:
@@ -58,7 +58,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - sonarr_data:/config
-      - ${DOCKERSTORAGEDIR}/media/tvseries:/data
+      - {{ storage_path }}/media/tvseries:/data
     networks:
       - {{ traefik_network_name }}
     labels:
@@ -81,7 +81,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - bazarr_data:/config
-      - ${DOCKERSTORAGEDIR}/media:/data
+      - {{ storage_path }}/media:/data
     networks:
       - {{ traefik_network_name }}
     labels:
@@ -135,7 +135,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - qbittorrent_data:/config:rw
-      - ${DOCKERSTORAGEDIR}/torrents:/data/torrents:rw
+      - {{ storage_path }}/torrents:/data/torrents:rw
     networks:
       - {{ traefik_network_name }}
     labels:

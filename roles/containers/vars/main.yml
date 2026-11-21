@@ -46,7 +46,10 @@ services:
         - "{{ storage_path }}/media/tvshows"
         - "{{ storage_path }}/torrents"
     enabled: true
+
+# Disabled stacks
+
   - name: dockhand
     version: "v1.0.56"
     port: 3000
-    enabled: true
+    enabled: false
