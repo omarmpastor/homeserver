@@ -23,7 +23,7 @@ services:
       - "992"
 
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${HOMESERVER_DOMAIN:-home.arpa}`)"

@@ -10,7 +10,7 @@ services:
       - "${GITEA_PORT:-3000}:${GITEA_DEFAULT_PORT:-3000}"
       - "2222:2222"
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gitea.rule=Host(`gitea.${HOMESERVER_DOMAIN:-home.arpa}`)"

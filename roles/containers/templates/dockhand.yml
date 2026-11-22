@@ -9,7 +9,7 @@ services:
       - ${DOCKER_SOCKET_VOLUME:-/var/run/docker.sock}:/var/run/docker.sock
       - ${DOCKHAND_DATA_VOLUME:-dockhand_data}:/app/data
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.dockhand.rule=Host(`dockhand.${HOMESERVER_DOMAIN:-home.arpa}`)"

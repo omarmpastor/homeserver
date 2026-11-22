@@ -14,7 +14,7 @@ services:
     volumes:
       - ${JACKETT_CONFIG_VOLUME:-jackett_data}:/config
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.${HOMESERVER_DOMAIN:-home.arpa}`)"
@@ -37,7 +37,7 @@ services:
       - ${RADARR_CONFIG_VOLUME:-radarr_data}:/config
       - ${RADARR_MEDIA_VOLUME:-${STORAGE_PATH:-/storage}/media/movies}:/data
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
@@ -60,7 +60,7 @@ services:
       - ${SONARR_CONFIG_VOLUME:-sonarr_data}:/config
       - ${SONARR_MEDIA_VOLUME:-${STORAGE_PATH:-/storage}/media/tvseries}:/data
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
@@ -83,7 +83,7 @@ services:
       - ${BAZARR_CONFIG_VOLUME:-bazarr_data}:/config
       - ${BAZARR_MEDIA_VOLUME:-${STORAGE_PATH:-/storage}/media}:/data
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.bazarr.rule=Host(`bazarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
@@ -105,7 +105,7 @@ services:
     volumes:
       - ${PROWLARR_CONFIG_VOLUME:-prowlarr_data}:/config
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
@@ -137,7 +137,7 @@ services:
       - ${QBITTORRENT_CONFIG_VOLUME:-qbittorrent_data}:/config:rw
       - ${QBITTORRENT_TORRENTS_VOLUME:-${STORAGE_PATH:-/storage}/torrents}:/data/torrents:rw
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${HOMESERVER_DOMAIN:-home.arpa}`)"

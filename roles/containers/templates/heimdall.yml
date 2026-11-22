@@ -13,7 +13,7 @@ services:
       #- "8443:443"
     restart: unless-stopped
     networks:
-      - traefik_network
+      - ${TRAEFIK_NETWORK_NAME:-traefik_network}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.heimdall.rule=Host(`heimdall.${HOMESERVER_DOMAIN:-home.arpa}`)"
