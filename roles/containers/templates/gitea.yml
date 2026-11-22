@@ -1,0 +1,23 @@
+services:
+  gitea:
+    image: docker.gitea.com/gitea:${GITEA_VERSION:-28.2.0}
+    container_name: gitea
+    restart: unless-stopped
+    volumes:
+      - ${GITEA_DATA_VOLUME:-${STORAGE_PATH:-/storage}/gitea_data}:/data:Z
+      - ${LOCALTIME_VOLUME:-/etc/localtime}:/etc/localtime:ro
+    ports:
+      - "${GITEA_PORT:-3000}:${GITEA_DEFAULT_PORT:-3000}"
+      - "2222:2222"
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitea.rule=Host(`gitea.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.gitea.entrypoints=web"
+      - "traefik.http.services.gitea.loadbalancer.server.port=${GITEA_DEFAULT_PORT:-3000}"
+
+networks:
+  traefik_network:
+    name: ${TRAEFIK_NETWORK_NAME:-traefik_network}
+    external: true

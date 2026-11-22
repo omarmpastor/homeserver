@@ -1,0 +1,42 @@
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: ghcr.io/hotio/jellyfin:${JELLYFIN_VERSION:-latest}
+    ports:
+      - "${JELLYFIN_PORT:-8096}:${JELLYFIN_DEFAULT_PORT:-8096}"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+      - WEBUI_PORTS=${JELLYFIN_DEFAULT_PORT:-8096}/tcp
+    volumes:
+      - ${JELLYFIN_DATA_VOLUME:-jellyfin_data}:/config
+      - ${JELLYFIN_CACHE_VOLUME:-jellyfin_cache}:/config/cache
+      - ${JELLYFIN_MOVIES_VOLUME:-${STORAGE_PATH:-/storage}/media/movies}:/data/movies:Z
+      - ${JELLYFIN_TVSHOWS_VOLUME:-${STORAGE_PATH:-/storage}/media/tvshows}:/data/tvshows:Z
+      - ${JELLYFIN_VIDEOS_VOLUME:-${STORAGE_PATH:-/storage}/media/videos}:/data/videos:Z
+
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    group_add:
+      - "992"
+
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.jellyfin.entrypoints=web"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=${JELLYFIN_DEFAULT_PORT:-8096}"
+
+volumes:
+  jellyfin_data:
+    name: ${JELLYFIN_DATA_VOLUME:-jellyfin_data}
+  jellyfin_cache:
+    name: ${JELLYFIN_CACHE_VOLUME:-jellyfin_cache}
+
+networks:
+  traefik_network:
+    name: ${TRAEFIK_NETWORK_NAME:-traefik_network}
+    external: true

@@ -1,0 +1,26 @@
+services:
+  dockhand:
+    image: docker.io/library/fnsys/dockhand:${DOCKHAND_VERSION:-v1.0.56}
+    container_name: dockhand
+    restart: unless-stopped
+    ports:
+      - "${DOCKHAND_PORT:-3001}:${DOCKHAND_DEFAULT_PORT:-3000}"
+    volumes:
+      - ${DOCKER_SOCKET_VOLUME:-/var/run/docker.sock}:/var/run/docker.sock
+      - ${DOCKHAND_DATA_VOLUME:-dockhand_data}:/app/data
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dockhand.rule=Host(`dockhand.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.dockhand.entrypoints=web"
+      - "traefik.http.services.dockhand.loadbalancer.server.port=${DOCKHAND_DEFAULT_PORT:-3000}"
+
+volumes:
+  dockhand_data:
+    name: ${DOCKHAND_DATA_VOLUME:-dockhand_data}
+
+networks:
+  traefik_network:
+    name: ${TRAEFIK_NETWORK_NAME:-traefik_network}
+    external: true

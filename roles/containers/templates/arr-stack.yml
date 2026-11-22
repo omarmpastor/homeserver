@@ -1,0 +1,164 @@
+services:
+  jackett:
+    container_name: jackett
+    image: ghcr.io/hotio/jackett:latest
+    restart: unless-stopped
+    ports:
+      - "${JACKETT_PORT:-9117}:${JACKETT_DEFAULT_PORT:-9117}"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+      - WEBUI_PORTS=${JACKETT_DEFAULT_PORT:-9117}/tcp
+    volumes:
+      - ${JACKETT_CONFIG_VOLUME:-jackett_data}:/config
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jackett.rule=Host(`jackett.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.jackett.entrypoints=web"
+      - "traefik.http.services.jackett.loadbalancer.server.port=${JACKETT_DEFAULT_PORT:-9117}"
+
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    ports:
+      - "${RADARR_PORT:-7878}:${RADARR_DEFAULT_PORT:-7878}"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+    volumes:
+      - ${LOCALTIME_VOLUME:-/etc/localtime}:/etc/localtime:ro
+      - ${RADARR_CONFIG_VOLUME:-radarr_data}:/config
+      - ${RADARR_MEDIA_VOLUME:-${STORAGE_PATH:-/storage}/media/movies}:/data
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.radarr.entrypoints=web"
+      - "traefik.http.services.radarr.loadbalancer.server.port=${RADARR_DEFAULT_PORT:-7878}"
+
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr:release
+    restart: unless-stopped
+    ports:
+      - "${SONARR_PORT:-8989}:${SONARR_DEFAULT_PORT:-8989}"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+    volumes:
+      - ${LOCALTIME_VOLUME:-/etc/localtime}:/etc/localtime:ro
+      - ${SONARR_CONFIG_VOLUME:-sonarr_data}:/config
+      - ${SONARR_MEDIA_VOLUME:-${STORAGE_PATH:-/storage}/media/tvseries}:/data
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.sonarr.entrypoints=web"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=${SONARR_DEFAULT_PORT:-8989}"
+
+  bazarr:
+    container_name: bazarr
+    image: ghcr.io/hotio/bazarr:nightly
+    restart: unless-stopped
+    ports:
+      - "${BAZARR_PORT:-6767}:${BAZARR_DEFAULT_PORT:-6767}"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+    volumes:
+      - ${LOCALTIME_VOLUME:-/etc/localtime}:/etc/localtime:ro
+      - ${BAZARR_CONFIG_VOLUME:-bazarr_data}:/config
+      - ${BAZARR_MEDIA_VOLUME:-${STORAGE_PATH:-/storage}/media}:/data
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.bazarr.entrypoints=web"
+      - "traefik.http.services.bazarr.loadbalancer.server.port=${BAZARR_DEFAULT_PORT:-6767}"
+
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr:testing
+    restart: unless-stopped
+    ports:
+      - "${PROWLARR_PORT:-9696}:${PROWLARR_DEFAULT_PORT:-9696}"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+      - ARGS=
+    volumes:
+      - ${PROWLARR_CONFIG_VOLUME:-prowlarr_data}:/config
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.prowlarr.entrypoints=web"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=${PROWLARR_DEFAULT_PORT:-9696}"
+
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent:release-e799f87
+    restart: unless-stopped
+    ports:
+      - "${QBITTORRENT_PORT:-8090}:${QBITTORRENT_DEFAULT_PORT:-8080}"
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+      - UMASK=022
+      - WEBUI_PORTS=${QBITTORRENT_DEFAULT_PORT:-8080}/tcp,${QBITTORRENT_DEFAULT_PORT:-8080}/udp
+    dns:
+      - 9.9.9.9
+      - 112.112.112.149
+    volumes:
+      - ${LOCALTIME_VOLUME:-/etc/localtime}:/etc/localtime:ro
+      - ${QBITTORRENT_CONFIG_VOLUME:-qbittorrent_data}:/config:rw
+      - ${QBITTORRENT_TORRENTS_VOLUME:-${STORAGE_PATH:-/storage}/torrents}:/data/torrents:rw
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.qbittorrent.entrypoints=web"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=${QBITTORRENT_DEFAULT_PORT:-8080}"
+
+volumes:
+  jackett_data:
+    name: ${JACKETT_CONFIG_VOLUME:-jackett_data}
+  radarr_data:
+    name: ${RADARR_CONFIG_VOLUME:-radarr_data}
+  sonarr_data:
+    name: ${SONARR_CONFIG_VOLUME:-sonarr_data}
+  bazarr_data:
+    name: ${BAZARR_CONFIG_VOLUME:-bazarr_data}
+  prowlarr_data:
+    name: ${PROWLARR_CONFIG_VOLUME:-prowlarr_data}
+  qbittorrent_data:
+    name: ${QBITTORRENT_CONFIG_VOLUME:-qbittorrent_data}
+
+networks:
+  traefik_network:
+    name: ${TRAEFIK_NETWORK_NAME:-traefik_network}
+    external: true

@@ -1,0 +1,30 @@
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:${HEIMDALL_VERSION:-2.8.4}
+    container_name: heimdall
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Madrid}
+    volumes:
+      - ${HEIMDALL_CONFIG_VOLUME:-heimdall_config}:/config
+    ports:
+      - "${HEIMDALL_PORT:-8085}:${HEIMDALL_DEFAULT_PORT:-80}"
+      #- "8443:443"
+    restart: unless-stopped
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.heimdall.rule=Host(`heimdall.${HOMESERVER_DOMAIN:-home.arpa}`)"
+      - "traefik.http.routers.heimdall.entrypoints=web"
+      - "traefik.http.services.heimdall.loadbalancer.server.port=${HEIMDALL_DEFAULT_PORT:-80}"
+
+volumes:
+  heimdall_config:
+    name: ${HEIMDALL_CONFIG_VOLUME:-heimdall_config}
+
+networks:
+  traefik_network:
+    name: ${TRAEFIK_NETWORK_NAME:-traefik_network}
+    external: true

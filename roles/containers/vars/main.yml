@@ -3,12 +3,6 @@ traefik_network_name: traefik_network
 networks:
   - "{{ traefik_network_name }}"
 
-traefik_labels:
-  - "traefik.enable=true"
-  - "traefik.http.routers.{{ item.name }}.rule=Host(`{{ item.name }}.{{ homeserver_domain }}`)"
-  - "traefik.http.routers.{{ item.name }}.entrypoints=web"
-  - "traefik.http.services.{{ item.name }}.loadbalancer.server.port={{ item.port }}"
-
 services:
   - name: traefik
     version: "v3.7.17"
@@ -16,10 +10,12 @@ services:
   - name: heimdall
     version: "2.8.4"
     port: 80
+    external_port: 8085
     enabled: true
   - name: gitea
     version: "28.2.0"
     port: 3000
+    external_port: 3000
     enabled: true
     storage_local:
       owner: "{{ PUID }}"
@@ -29,6 +25,7 @@ services:
   - name: nextcloud
     version: "35-apache"
     port: 80
+    external_port: 8081
     storage_local:
       owner: 33
       group: 33
@@ -52,4 +49,5 @@ services:
   - name: dockhand
     version: "v1.0.56"
     port: 3000
+    external_port: 3001
     enabled: false

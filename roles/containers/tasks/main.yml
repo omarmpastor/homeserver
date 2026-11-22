@@ -27,8 +27,8 @@
   loop: "{{ services }}"
 
 - name: Deploy container compose files
-  template:
-    src: "{{ item.name }}.yml.j2"
+  ansible.builtin.copy:
+    src: "{{ item.name }}.yml"
     dest: "{{ docker_containers_dir }}/{{ item.name }}/compose.yml"
   loop: "{{ services }}"
 
