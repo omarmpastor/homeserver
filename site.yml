@@ -1,14 +1,36 @@
 ---
 - hosts: homeserver
   become: true
+  gather_facts: false
+
   vars_files:
     - vault.yml
+
+  pre_tasks:
+    - name: Recopilar facts sin escalada de privilegios
+      ansible.builtin.setup:
+      become: false
+      tags: always
+
+    - name: Usar sudo.ws en Ubuntu 26
+      ansible.builtin.set_fact:
+        ansible_become_exe: /usr/bin/sudo.ws
+      become: false
+      when:
+        - ansible_facts['distribution'] == "Ubuntu"
+        - ansible_facts['distribution_version'] is version('26.0', '>=')
+        - ansible_facts['distribution_version'] is version('27.0', '<')
+      tags: always
+
   roles:
-  - role: network
-    tags: network
-  - role: system
-    tags: system
-  - role: docker
-    tags: docker
-  - role: containers
-    tags: containers
+    - role: network
+      tags: network
+
+    - role: system
+      tags: system
+
+    - role: docker
+      tags: docker
+
+    - role: containers
+      tags: containers
